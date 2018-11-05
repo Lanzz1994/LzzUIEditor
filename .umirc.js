@@ -8,11 +8,11 @@ export default {
       dva: true,
       dynamicImport: true,
       title: 'app_umi',
-      dll: false,
+      dll: true,
       routes: {
         exclude: [],
       },
-      hardSource: false,
+      hardSource: true,
     }],
   ],
 }
