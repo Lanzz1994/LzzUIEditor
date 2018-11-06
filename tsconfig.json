@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "noImplicitAny": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "sourceMap": true,
+        "jsx": "preserve",
+        "outDir": "./src/LzzUI/build",
+        "target": "es6",
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}
