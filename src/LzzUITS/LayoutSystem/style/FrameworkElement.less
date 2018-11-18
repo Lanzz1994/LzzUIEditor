@@ -1,0 +1,35 @@
+@import '../../style/themes/default.less';
+
+.lz-framework-element{
+    position: absolute;
+    border:1px solid #ddd;
+
+    .element-hover,.element-selected,.element-draging-hover{
+        border-radius:2px;
+    }
+
+    //经过元素
+    .element-hover{
+        box-shadow:inset 0px 0px 3px rgb(30, 30, 30);
+    }
+    
+    //选中元素
+    .element-selected{
+        box-shadow:inset 0px 0px 3px #f80;
+
+        &>.lz-drag-container::after{
+            content: "";
+            position: absolute;
+            left:0;
+            right:0;
+            bottom: 0;
+            top: 0;
+            background-color: rgba(202, 203, 205, 0.3);
+            pointer-events: none;
+        }
+    }
+
+    .element-draging-hover{
+        box-shadow:inset 0px 0px 5px #6d2424;
+    }
+}

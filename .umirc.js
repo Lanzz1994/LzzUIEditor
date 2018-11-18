@@ -7,12 +7,13 @@ export default {
       antd: true,
       dva: true,
       dynamicImport: true,
-      title: 'app_umi',
-      dll: true,
+      title: 'LzzUIEditor',
+      dll: false,
       routes: {
         exclude: [],
       },
-      hardSource: true,
+      hardSource: false,
     }],
   ],
+  disableCSSModules:true
 }
