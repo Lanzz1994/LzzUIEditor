@@ -1,17 +1,16 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src/LzzUIST/",
-    "outDir": "./src/LzzUI/",
+    "baseUrl": "./src/components.ts/*",
+    "outDir": "./src/components/",
     "strictNullChecks": true,
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "jsx": "preserve",
-    "noUnusedParameters": true,
-    "noUnusedLocals": true,
-    "noImplicitAny": true,
+    "noUnusedParameters": false,
+    "noUnusedLocals": false,
+    "noImplicitAny": false,
     "target": "es6",
   },
-  "include":["src/LzzUITS/*"],
   "exclude": [
     "node_modules",
     "build"

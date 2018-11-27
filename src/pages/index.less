@@ -1,0 +1,58 @@
+@import '../style/themes/themes.less';
+@import '../style/global.less';
+
+:global{
+
+  .lz-ui-wraper{ 
+    background-color: @lz-ui-wraper_background;
+    height:100%;
+    width:100%;
+  }
+
+  .lz-ui-work-area{
+    min-height: 768px-64px;
+    height: calc(100vh - 64px);
+  }
+
+  //Antd Layout 变色时涉及的更改属性
+  .lz-ui-layout-themes{
+    background: @lz-ui-layout-themes_background;
+    color: @lz-ui-layout-themes_color;
+    box-shadow: @lz-ui-layout-themes-box_shadow;
+  }
+
+  .lz-ui-header{
+    .lz-ui-layout-themes;
+    
+    background: @lz-ui-header_background;
+    border-bottom: 1px solid @lz-ui-layout-themes-border-color;
+    margin-bottom: 1px;
+  }
+
+  .lz-ui-left{
+    .lz-ui-layout-themes;
+
+    border-right: 1px solid @lz-ui-layout-themes-border-color;
+  }
+
+  .lz-ui-right{
+    .lz-ui-layout-themes;
+
+    border-left: 1px solid @lz-ui-layout-themes-border-color;
+  }
+
+  .lz-ui-center-wraper{
+    overflow-x: auto;
+    overflow-y: auto;
+  }
+  .lz-ui-center{
+    .lz-ui-layout-themes;
+    
+    width:5000px;
+    height:5000px;
+    
+    display: flex;
+
+  }
+
+}

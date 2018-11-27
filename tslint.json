@@ -8,7 +8,8 @@
     "interface-over-type-literal":false,
     "no-console": false,
     "member-access": false,
-    "no-debugger": false
+    "no-debugger": false,
+    "noUnusedLocals":false
   },
   "linterOptions": {
     "exclude": [
