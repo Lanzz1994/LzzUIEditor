@@ -1,10 +1,15 @@
 import update from 'immutability-helper'
-import LinkedTree from '../utils/LinkedTree'
+import LinkedTree from '../components/utils/LinkedTree'
 
-let partTree=new LinkedTree({allowChild:true,name:'根'});
+let partTree=new LinkedTree({allowChild:true,name:'0'});
 
-let child=new LinkedTree({},partTree);
-let child1=new LinkedTree({},child);
+let child=new LinkedTree({name:'1'},partTree);
+new LinkedTree({name:'1-1'},child);
+new LinkedTree({name:'1-2'},child);
+
+let child2=new LinkedTree({name:'2'},partTree);
+new LinkedTree({name:'2-1'},child2);
+new LinkedTree({name:'2-2'},child2);
 
 export default {
     namespace: 'DataCore',

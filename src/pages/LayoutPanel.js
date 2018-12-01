@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'dva';
 import {DragDropBoard} from '../components/DragDrop/index';
-import {FrameworkElement} from '../components/LayoutSystem/index';
+import {FrameworkElement} from '../components/Layout/index';
 // 布局容器
 class LayoutPanel extends React.Component {
     constructor(props) {
@@ -18,7 +18,7 @@ class LayoutPanel extends React.Component {
     render() {
         const { onHoverFrameworkElement } = this;
         const { PartTreeCore } = this.props.DataCore;
-        console.log(this.props.DataCore);
+        //console.log(this.props.DataCore);
         const frames = PartTreeCore.eachChilds(function (node, siblings) {
             return (<FrameworkElement key={node.ID()} onMouseOver={onHoverFrameworkElement} tree={node}>{siblings}</FrameworkElement>);
         });

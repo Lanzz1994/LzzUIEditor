@@ -47,7 +47,7 @@ class DragContainer extends React.PureComponent<DragContainerProps>{
 
     render(){
 		const {connectDragSource,children}=this.props;
-		const dom=(<div className="lz-drag-container">{children}</div>);
-        return connectDragSource?connectDragSource(dom):dom
+		const html=(<div className="lz-drag-container">{children}</div>);
+        return connectDragSource?connectDragSource(html):html;
     }
 })

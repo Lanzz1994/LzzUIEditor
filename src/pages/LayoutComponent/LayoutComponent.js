@@ -1,19 +1,17 @@
 import * as React from 'react';
 import { connect } from 'dva';
-import {FrameworkElement} from '../../components/LayoutSystem/index';
+import {DragDropBoard} from '../../components/DragDrop/index';
+import {FrameworkElement} from '../../components/Layout/index';
 import  './LayoutComponent.less'
 
 class LayoutComponent extends React.Component{
-    
     render(){
         const { PartTreeCore } = this.props.DataCore;
-        const frames = PartTreeCore.eachChilds(function (node, siblings) {
-
-            
-
-            return (<FrameworkElement key={node.ID()} tree={node}>{siblings}</FrameworkElement>);
+        let frames=PartTreeCore.ForEachStartLeaf(function(current,children){
+            return current._parent?(<FrameworkElement key={current.ID} tree={current}>{children}</FrameworkElement>):children;
         });
-        return (<div className="lz-layout-component">{frames}</div>);
+
+        return (<DragDropBoard><div className="lz-layout-component">{frames}</div></DragDropBoard>);
     }
 }
 

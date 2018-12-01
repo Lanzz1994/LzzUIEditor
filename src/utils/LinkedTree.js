@@ -277,10 +277,10 @@ import {generateUUID} from './utils'
     }
 
     //复制指定树节点并返回新的树节点
-    function copy(tree){
+    function copy(tree) {
         return isLeaf(tree)? new LinkedTree(tree.data):
         eachTree(tree,function(current,prev,childs){
-            let copyTree=new LinkedTree(current.data);
+            let copyTree=new LinkedTree(current.data);//还是指向之前实例的值，有问题
             if(!isLeaf(current)){
                 copyTree._childs=childs;
                 copyTree._firstChild=childs[0];
@@ -341,7 +341,7 @@ import {generateUUID} from './utils'
             prev=eachTree(subTree,handle,prev);
             subTree = subTree._next;
             childs.push(prev);
-        }   
+        }
         return handle(tree,prev,childs);
     }
 
