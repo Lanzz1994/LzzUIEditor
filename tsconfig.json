@@ -4,12 +4,12 @@
     "outDir": "./src/components/",
     "strictNullChecks": true,
     "moduleResolution": "node",
-    "experimentalDecorators": true,
     "jsx": "preserve",
     "noUnusedParameters": false,
     "noUnusedLocals": false,
     "noImplicitAny": false,
     "target": "es6",
+    "experimentalDecorators": true,
   },
   "exclude": [
     "node_modules",

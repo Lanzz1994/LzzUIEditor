@@ -1,1 +1,0 @@
-export type ControlGenerate=(props:any,children:any)=>any;

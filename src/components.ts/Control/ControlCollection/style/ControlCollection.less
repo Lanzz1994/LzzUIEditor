@@ -1,0 +1,121 @@
+:global{
+    .lz-control-collection{
+        height: 100%;
+        background-color: unset;
+
+        .ant-tabs {
+            height: 100%;
+        }
+
+        //调整Tab组件的内边距
+        .ant-tabs-vertical > .ant-tabs-bar .ant-tabs-tab{
+            padding:8px 12px;
+            //color: @global-font-color;
+            color:#515159;
+        }
+
+        .ant-tabs-vertical.ant-tabs-left > .ant-tabs-content{
+            padding-left: 0;
+            //border-left:1px solid @global-splitbar-color;
+            border-left:1px solid #D9D9D9;
+        }
+
+        //调整标签页组件 竖线标识 为背景色
+        .ant-tabs-vertical.ant-tabs-left > .ant-tabs-bar .ant-tabs-ink-bar{
+            right: 0;
+            width:100%;
+            z-index: 0;
+            //background-color: @part-state-color;
+            background-color:rgba(221, 221, 221, 0.5);
+        }
+
+        //还原竖线
+        .ant-tabs-vertical.ant-tabs-left > .ant-tabs-bar .ant-tabs-ink-bar::after{
+            content: "";
+            width:3px;
+            height: 37px;
+            position: absolute;
+            left: 0;
+            background-color: #1890ff;
+        }
+
+        //Tab组件边框线
+        .ant-tabs-vertical.ant-tabs-left > .ant-tabs-bar{
+            //border-right:1px solid @global-splitbar-color;
+            border-right:1px solid #D9D9D9;
+        }
+
+        .ant-tabs-vertical > .ant-tabs-bar .ant-tabs-tab.ant-tabs-tab-active{
+            color:#000;
+        }
+    }
+
+    .ant-layout-sider-collapsed .lz-control-collection .ant-tabs{
+        overflow: hidden!important;
+    }
+
+    .lz-control-list{
+        height: 100%;
+        background-color: unset;
+        width:148px;
+
+        .ant-collapse{
+            background-color: unset;            
+        }
+        .ant-collapse > .ant-collapse-item > .ant-collapse-header{
+            line-height: 12px;
+        }
+        .ant-collapse > .ant-collapse-item > .ant-collapse-header .arrow{
+            line-height: 36px;
+        }
+        .ant-collapse-borderless > .ant-collapse-item{
+            border-bottom:none;
+        }
+        .ant-collapse > .ant-collapse-item > .ant-collapse-header{
+            // color: @global-font-color;
+            // background-color: @part-collapse-header-color;
+            color: #515159;
+            //background-color: @part-collapse-header-color;
+            background-color:#F3F3F3;
+        }
+        .ant-collapse-content{
+            //color: @global-font-color;
+            color: #515159;
+        }
+
+        .ant-collapse-borderless > .ant-collapse-item > .ant-collapse-content{
+            //background-color: @layout-sider-content;
+            background-color: #EBEBEB;
+        }
+        .ant-collapse-borderless > .ant-collapse-item > .ant-collapse-content > .ant-collapse-content-box{
+            padding-top: 16px;
+        }
+
+        .ant-divider-with-text{
+            cursor: default;
+        }
+        .ant-divider-with-text:first-child{
+            margin-top: 0;
+        }
+        .ant-divider-horizontal.ant-divider-with-text:before, .ant-divider-horizontal.ant-divider-with-text:after{
+            //border-top:1px solid @global-splitbar-color;
+            border-top:1px solid #D9D9D9;
+        }
+        .ant-divider-inner-text{
+            padding:0 8px;
+            opacity: 0.6;
+            font-weight: normal;
+            //color: @global-font-color;
+            color:515159;
+        }
+    }
+
+    .lz-control-list-panel{
+        .ant-collapse-content-box{
+            display: flex;
+            flex-direction: row;
+            flex-wrap:wrap;
+            justify-content:space-around;
+        }
+    }
+}

@@ -1,11 +1,13 @@
 import * as React from 'react';
+import classNames from 'classnames';
 import DragDropType from './DragDropType';
 import {DragSource, DragSourceConnector, DragSourceMonitor, ConnectDragSource, ConnectDragPreview} from 'react-dnd';
 
 export interface DragContainerProps{
+	className?:string,
     connectDragSource?: ConnectDragSource,
 	connectDragPreview?: ConnectDragPreview,
-	dragPreview?:React.ReactElement<any>
+	dragPreview?:React.ReactElement<any>,
 	isDragging?: boolean,
 	beginDrag?:(props:any,monitor:any,component:any)=>{},
 	endDrag?:(props:any, monitor:any, component:any)=>void
@@ -46,8 +48,8 @@ class DragContainer extends React.PureComponent<DragContainerProps>{
 	}
 
     render(){
-		const {connectDragSource,children}=this.props;
-		const html=(<div className="lz-drag-container">{children}</div>);
+		const {connectDragSource,className,children}=this.props;
+		const html=(<div className={classNames("lz-drag-container",className)}>{children}</div>);
         return connectDragSource?connectDragSource(html):html;
     }
 })

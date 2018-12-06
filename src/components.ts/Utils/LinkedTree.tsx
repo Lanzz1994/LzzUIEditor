@@ -158,7 +158,7 @@ export default class LinkedTree {
 
     //=================== Properties =====================
     get ID(){return this._id;}
-    get IsRoot(){return this._parent?true:false}
+    get HasParent(){return this._parent?true:false}
     get IsLeaf(){return this._children.length===0;}
     get Length(){return this._children.length;}
 
@@ -286,6 +286,20 @@ export default class LinkedTree {
         }
     }
 
+    //=================== DataFormat =====================
+    /**
+     * format: {data:{},children:[ {data:{},children:[]},{data:{},children:[]} ]}
+     */
+    ToLinkedTreeData(){
+        return eachTreeChildren(this,(current:LinkedTree,childen:any[])=>{
+            return {data:current.Data,childen:childen};
+        });
+    }
+
+    ToLinkedTreeJSON(){
+        return JSON.stringify(this.ToLinkedTreeData());
+    }
+
     //=================== Other =====================
     ForEach(fn:(current:LinkedTree,parent:any)=>any):any{
         return eachTreeParent(this,fn);
@@ -301,18 +315,4 @@ export default class LinkedTree {
         });
         return result;
     }
-
-    /**
-     * format: {data:{},children:[ {data:{},children:[]},{data:{},children:[]} ]}
-     */
-    ToStructureData(){
-        return eachTreeChildren(this,(current:LinkedTree,childen:any[])=>{
-            return {data:current.Data,childen:childen};
-        });
-    }
-
-    ToLinkedTreeJSON(){
-        return JSON.stringify(this.ToStructureData());
-    }
-
 }

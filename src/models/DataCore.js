@@ -1,15 +1,15 @@
 import update from 'immutability-helper'
 import LinkedTree from '../components/utils/LinkedTree'
 
-let partTree=new LinkedTree({allowChild:true,name:'0'});
+let partTree=new LinkedTree({});
 
-let child=new LinkedTree({name:'1'},partTree);
-new LinkedTree({name:'1-1'},child);
-new LinkedTree({name:'1-2'},child);
+let child=new LinkedTree({Info:{Key:'Antd.Button'},PropData:{}},partTree);
+// new LinkedTree({name:'1-1'},child);
+// new LinkedTree({name:'1-2'},child);
 
-let child2=new LinkedTree({name:'2'},partTree);
-new LinkedTree({name:'2-1'},child2);
-new LinkedTree({name:'2-2'},child2);
+// let child2=new LinkedTree({name:'2'},partTree);
+// new LinkedTree({name:'2-1'},child2);
+// new LinkedTree({name:'2-2'},child2);
 
 export default {
     namespace: 'DataCore',

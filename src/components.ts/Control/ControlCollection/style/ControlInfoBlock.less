@@ -1,0 +1,48 @@
+:global{
+    .lz-control-info-block{
+        position: relative;
+        display: flex;
+        justify-content:center;
+        align-items:center;
+        flex-direction: column;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        cursor: pointer;
+        width:58px;
+        height:58px;
+
+        &:hover{
+            //background-color: @part-state-color;
+            background-color:#ddd;
+            
+            border-radius: 3px;
+    
+            .lz-control-info-introduce{
+                display: block;
+            }
+    
+            // :global(.iconfont){
+            //     transform: scale(1.7);
+            // }
+        }
+    
+        .lz-control-info-introduce{
+            position: absolute;
+            right: 3px;
+            top: -3px;
+            padding: 2px;
+            display: none;
+    
+            &:hover{
+                font-weight: bold;
+            }
+        }
+    
+        // :global{
+        //     .iconfont{
+        //         transform: scale(1.5);
+        //         transition: All 0.2s ease;
+        //     }
+        // }
+    }
+}

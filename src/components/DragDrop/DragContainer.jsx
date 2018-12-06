@@ -1,4 +1,5 @@
 import * as React from 'react';
+import classNames from 'classnames';
 import DragDropType from './DragDropType';
 import { DragSource } from 'react-dnd';
 // 定义事件处理
@@ -29,8 +30,8 @@ export default DragSource(DragDropType.DragDrop, SourceEvents, (connect, monitor
         }
     }
     render() {
-        const { connectDragSource, children } = this.props;
-        const html = (<div className="lz-drag-container">{children}</div>);
+        const { connectDragSource, className, children } = this.props;
+        const html = (<div className={classNames("lz-drag-container", className)}>{children}</div>);
         return connectDragSource ? connectDragSource(html) : html;
     }
 });

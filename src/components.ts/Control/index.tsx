@@ -1,5 +1,4 @@
-import ControlInfo,{ControlProp} from './ControlInfo';
-import ControlAssembleInfo from './ControlAssembleInfo';
+export {ControlCollection} from './ControlCollection/index';
+export {ControlInfo,ControlData} from './types';
 
-export {ControlInfo,ControlProp}
-export {ControlAssembleInfo}
+export {GenerateControl} from './Tool'

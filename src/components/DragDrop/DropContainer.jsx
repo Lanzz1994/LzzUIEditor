@@ -1,4 +1,5 @@
 import * as React from 'react';
+import classNames from 'classnames';
 import DragDropType from './DragDropType';
 import { DropTarget } from 'react-dnd';
 const TargetEvents = {
@@ -21,8 +22,8 @@ export default DropTarget(DragDropType.DragDrop, TargetEvents, (connect, monitor
     isOverCurrent: monitor.isOver({ shallow: true }),
 }))(class DropContainer extends React.PureComponent {
     render() {
-        const { connectDropTarget, children } = this.props;
-        const html = (<div className="lz-drop-container">{children}</div>);
+        const { connectDropTarget, className, children } = this.props;
+        const html = (<div className={classNames("lz-drop-container", className)}>{children}</div>);
         return connectDropTarget ? connectDropTarget(html) : html;
     }
 });
