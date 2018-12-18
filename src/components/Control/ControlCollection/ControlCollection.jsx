@@ -5,10 +5,11 @@ import CollectionData from './CollectionConfig';
 const TabPane = Tabs.TabPane;
 export default class ControlCollection extends React.PureComponent {
     render() {
+        const { beginDragControl, endDragControl } = this.props;
         return (<div className="lz-control-collection">
                 <Tabs defaultActiveKey="1" tabPosition="left">
                     <TabPane tab="组件" key="1" className="lz-control-list">
-                        <ControlCategory data={CollectionData}/>
+                        <ControlCategory data={CollectionData} defaultActiveKey={["General"]} beginDragControl={beginDragControl} endDragControl={endDragControl}/>
                     </TabPane>
                     <TabPane tab="图标" key="2">
                         Icons

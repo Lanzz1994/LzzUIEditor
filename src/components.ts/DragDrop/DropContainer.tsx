@@ -1,17 +1,20 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import DragDropType from './DragDropType'
+import DragDropType from './DragDropType';
+import {CssBase} from './types';
 import { DropTarget, DropTargetConnector, DropTargetMonitor, ConnectDropTarget } from 'react-dnd';
 
 // 用于拖拽时 放置的容器
 export interface DropContainerProps{
-	className?:string,
 	connectDropTarget?: ConnectDropTarget,
     isOver?: boolean,
 	isOverCurrent?: boolean,
-	drop?:(props:any,monitor:DropTargetMonitor,component:any)=>void,
-	hover?:(props:any, monitor:any, component:any)=>void
-}
+	drop?:(props:any,monitor:any,component:any)=>void,
+	hover?:(props:any, monitor:any, component:any)=>void,
+	onMouseOver:React.MouseEventHandler<HTMLDivElement>,
+	onClick:React.MouseEventHandler<HTMLDivElement>,
+	[propName:string]:any
+};
 
 const TargetEvents = {
 	drop:(props:any,monitor:DropTargetMonitor,component:any)=>{
@@ -19,7 +22,7 @@ const TargetEvents = {
 			props.drop(props,monitor,component);
 		}
 	},
-	hover:(props:any, monitor:any, component:any)=>{
+	hover:(props:any, monitor:DropTargetMonitor, component:any)=>{
 		if(props.hover){
 			props.hover(props,monitor,component);
 		}
@@ -33,11 +36,11 @@ export default DropTarget(DragDropType.DragDrop, TargetEvents, (connect:DropTarg
 	isOver: monitor.isOver(),
 	isOverCurrent: monitor.isOver({ shallow: true }),
 }))(
-class DropContainer extends React.PureComponent<DropContainerProps> {
-
+class DropContainer extends React.PureComponent<DropContainerProps&CssBase> {
+	
     public render(){
-		const {connectDropTarget,className,children} = this.props;
-		const html=(<div className={classNames("lz-drop-container",className)}>{children}</div>);
+		const {id,className,style,connectDropTarget,children,onMouseOver,onClick} = this.props;
+		const html=(<div id={id} className={classNames("lz-drop-container",className)} style={style} onClick={onClick} onMouseOver={onMouseOver}>{children}</div>);
 		return connectDropTarget?connectDropTarget(html):html;
 	}
 })

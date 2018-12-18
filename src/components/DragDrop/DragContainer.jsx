@@ -30,8 +30,8 @@ export default DragSource(DragDropType.DragDrop, SourceEvents, (connect, monitor
         }
     }
     render() {
-        const { connectDragSource, className, children } = this.props;
-        const html = (<div className={classNames("lz-drag-container", className)}>{children}</div>);
+        const { id, className, style, connectDragSource, children } = this.props;
+        const html = (<div id={id} className={classNames("lz-drag-container", className)} style={style}>{children}</div>);
         return connectDragSource ? connectDragSource(html) : html;
     }
 });

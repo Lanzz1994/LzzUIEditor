@@ -1,4 +1,6 @@
-export {ControlCollection} from './ControlCollection/index';
-export {ControlInfo,ControlData} from './types';
+export * from './ControlCollection/index';
+export * from './ControlStore/index';
+export * from './ControlEditor/index';
 
-export {GenerateControl} from './Tool'
+export {ControlInfo,ControlData} from './types';
+export {GenerateControl} from './Utils';

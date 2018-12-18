@@ -1,0 +1,73 @@
+{
+    "name": "用户列表",
+    "data": [
+        {
+            "data": {
+                "Info": {
+                    "Key": "Html.div"
+                },
+                "PropData": {
+                    "className": "page-header",
+                    "style": {
+                        "display": "flex",
+                        "justify-content": "space-between"
+                    }
+                }
+            },
+            "children": [
+                {
+                    "data": {
+                        "Info": {
+                            "Key": "Antd.Icon"
+                        },
+                        "PropData": {
+                            "type": "icon-back"
+                        }
+                    }
+                },
+                {
+                    "data": {
+                        "Info": {
+                            "Key": "Html.div"
+                        },
+                        "PropData": {
+                            "className": "page-header-title"
+                        }
+                    },
+                    "children": [
+                        {
+                            "data": {
+                                "Info": {
+                                    "Key": "Html.div"
+                                },
+                                "PropData": {
+                                    "className": "page-header-title-text"
+                                }
+                            }
+                        },
+                        {
+                            "data": {
+                                "Info": {
+                                    "Key": "Html.div"
+                                },
+                                "PropData": {
+                                    "className": "page-header-title-img"
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "data": {
+                        "Info": {
+                            "Key": "Html.div"
+                        },
+                        "PropData": {
+                            "className": "page-header-follow"
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

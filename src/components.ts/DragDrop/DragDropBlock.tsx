@@ -1,14 +1,13 @@
 import * as React from "react";
 import classNames from "classnames";
+import {CssBase} from "./types";
 import { default as DragContainer, DragContainerProps } from "./DragContainer";
 import { default as DropContainer, DropContainerProps } from "./DropContainer";
 
 type DragDropContainerProps = {
-  className?: string;
-  style?: React.CSSProperties;
   onMouseOver?:React.MouseEventHandler<HTMLDivElement>;
   onClick?:React.MouseEventHandler<HTMLDivElement>;
-} & DragContainerProps & DropContainerProps;
+} & DragContainerProps & DropContainerProps & CssBase;
 
 
 // 可以用 markdown 的形式直接写出业务组件？
@@ -17,10 +16,10 @@ type DragDropContainerProps = {
 export default class DragDropContainer extends React.PureComponent<DragDropContainerProps> {
     
   render() {
-    const { className, style, hover,onMouseOver,onClick, beginDrag, endDrag, drop } = this.props;
+    const { id, className, style, hover,onMouseOver,onClick, beginDrag, endDrag, drop } = this.props;
     const dragdropCls = classNames("lz-dragdrop-container", className);
     return (
-      <div className={dragdropCls} style={style} onMouseOver={onMouseOver} onClick={onClick}>
+      <div id={id} className={dragdropCls} style={style} onMouseOver={onMouseOver} onClick={onClick}>
         <DragContainer beginDrag={beginDrag} endDrag={endDrag}>
             <DropContainer drop={drop} hover={hover}>{this.props.children}</DropContainer>
         </DragContainer>

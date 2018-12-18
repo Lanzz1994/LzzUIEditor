@@ -1,8 +1,8 @@
-import { AntdControlInfos } from '../ControlStore/index';
+import { AntdControlInfoCategory } from '../ControlStore/index';
 const General = {
     Key: 'General',
     Title: '通用',
-    Infos: AntdControlInfos.General
+    Infos: AntdControlInfoCategory.General
 };
 const Layout = {
     Key: 'Layout',

@@ -16,5 +16,8 @@ export default {
       },
       hardSource: false,
     }],
-  ]
+  ],
+  base:'./',
+  publicPath:'./',
+  history: 'hash',
 }

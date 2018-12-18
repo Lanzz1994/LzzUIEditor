@@ -3,3 +3,5 @@ import LayoutFramework from './LayoutFramework';
 import LayoutComponent from './LayoutComponent';
 import '../../components.ts/Layout/style/index';
 export { LayoutFramework, LayoutComponent, FrameworkElement };
+export { UpdateFrameworkLayout } from './Utils';
+export * from './types';

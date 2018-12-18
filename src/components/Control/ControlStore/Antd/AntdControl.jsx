@@ -1,7 +1,6 @@
 import * as Antd from 'antd';
-const temp = (props, children) => { };
 //General
-const Button = (props, children) => <Antd.Button {...props}>{children}</Antd.Button>;
+const Button = (props) => { return <Antd.Button {...props}>{props.text}</Antd.Button>; };
 const ButtonGroup = (props, children) => <Antd.Button.Group {...props}>{children}</Antd.Button.Group>;
 const Icon = (props) => <Antd.Icon {...props}/>;
 //Layout
@@ -14,20 +13,21 @@ const Header = (props, children) => <Antd.Layout.Header {...props}>{children}</A
 const Content = (props, children) => <Antd.Layout.Content {...props}>{children}</Antd.Layout.Content>;
 const Footer = (props, children) => <Antd.Layout.Footer {...props}>{children}</Antd.Layout.Footer>;
 const Sider = (props, children) => <Antd.Layout.Sider {...props}>{children}</Antd.Layout.Sider>;
-export default {
+const AntdControls = {
     //General
-    "Button": Button,
-    "ButtonGroup": ButtonGroup,
-    "Icon": Icon,
+    Button,
+    ButtonGroup,
+    Icon,
     //把这些整理完后，衔接整个流程看看，Control,Info,Assemble 直接要怎么衔接定义
     //Layout
     //Grid
-    "Row": Row,
-    "Col": Col,
+    Row,
+    Col,
     //Layout
-    "Layout": Layout,
-    "Header": Header,
-    "Content": Content,
-    "Footer": Footer,
-    "Sider": Sider,
+    Layout,
+    Header,
+    Content,
+    Footer,
+    Sider,
 };
+export { AntdControls };

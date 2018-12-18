@@ -1,25 +1,25 @@
 import * as React from 'react';
 import LinkedTree from '../Utils/LinkedTree';
-import {GenerateControl,ControlData} from '../Control/index'
+import {GenerateControl,ControlData} from '../Control/index';
+import {LayoutBaseProps} from './types';
 
-interface LayoutComponentProps{
-    layoutData:LinkedTree;
-}
-
-export default class LayoutComponent extends React.Component<LayoutComponentProps>{
+export default class LayoutComponent extends React.Component<LayoutBaseProps>{    
 
     render(){
         const {layoutData}=this.props;
 
-        const controls=layoutData?layoutData.ForEachStartLeaf((current:LinkedTree,children:any[])=>{
+        const controls=layoutData.ForEachStartLeaf((current:LinkedTree,children:any[])=>{
             if(current.HasParent){
                 let data=current.Data as ControlData;
+                if(!data.PropData)data.PropData={};
+                data.PropData.key=current.ID;
+                data.PropData.id=current.ID;
                 return GenerateControl(data,children);
             }else{
                 return children;
             }
-        }):null;
+        });
 
-        return <React.Fragment>{controls}</React.Fragment>;
+        return controls;
     }
 }

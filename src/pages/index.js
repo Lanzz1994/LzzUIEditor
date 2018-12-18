@@ -1,14 +1,15 @@
-import React,{PureComponent} from 'react';
+import React from 'react';
 import { connect } from 'dva';
 import {Layout} from 'antd';
 import {DragDropBoard} from '../components/DragDrop/index';
-import {ControlCollection} from '../components/Control/index';
-import {LayoutFramework} from '../components/Layout/index';
 import {scrollToCenter} from '../utils/dom';
+import UICenter from './UICenter';
+import UILeft from './UILeft';
+import UIRight from './UIRight';
 import './index.less';
 const {Header,Sider,Content}=Layout;
 
-class LzzUIEditor extends PureComponent{
+class LzzUIEditor extends React.PureComponent{
 
   constructor(props){
     super(props);
@@ -20,17 +21,14 @@ class LzzUIEditor extends PureComponent{
     setTimeout(function() {
       scrollToCenter(center_wraper);
     }, 500);
-  }
 
-  generateInterfaceConfig({LayoutAreaSize,LayoutAreaSizeRatio,LayoutAreaPosition}){
-    return Object.assign({},LayoutAreaSize,LayoutAreaPosition);
+    const {LayoutCore}=this.props;
+    window.PartTreeCore=LayoutCore.PartTreeCore;
   }
 
   render(){
     const {LzzUICenter}=this;
-    const {generateInterfaceConfig}=this;
-    const {PartTreeCore}=this.props.DataCore;
-    const interfaceConfig = generateInterfaceConfig(this.props.InterfaceConfig);
+    const {LayoutAreaSetting} = this.props.InterfaceConfig;
     
     return(
       <Layout className="lz-ui-wraper">
@@ -40,19 +38,18 @@ class LzzUIEditor extends PureComponent{
           <DragDropBoard>
               <Layout className="lz-ui-work-area">
                   <Sider className="lz-ui-left">
-										<ControlCollection />
+										<UILeft/>
                   </Sider>
                   <Layout>
                       <Content className="lz-ui-center-wraper">
                         <div className="lz-ui-center" ref={LzzUICenter}>
-                          <iframe className="lz-layout-component-iframe" src="./LayoutComponent" style={interfaceConfig}></iframe>
-                          <LayoutFramework layoutData={PartTreeCore} interfaceConfig={interfaceConfig}/>
+                          <UICenter interfaceConfig={LayoutAreaSetting}/>
                           <div>Grid-Rule</div>
                         </div>
                       </Content>
                   </Layout>
                   <Sider className="lz-ui-right" width="294">
-                      PartEditor
+                      <UIRight/>
                   </Sider>
               </Layout>
           </DragDropBoard>

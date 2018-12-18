@@ -12,22 +12,45 @@ export type Description = {
 export type ControlInfo= {
     Key:string,
     Type?:string,
+    DefaultProps?:any,
     Props?:ControlProp[],
+    Children?:ControlInfo[],
     Introduction?:Description,
+    IsLeaf?:boolean
 }
 
 export type ControlProp={
     PropName:string,
-    Name?:string,
+    Name?:string|React.ReactNode,
     Description?:string,
-    EditorName?:string,
-    Default?:any
+    EditorInfo?:PropEditorInfo
 }
 
 export type ControlData={
     Info:ControlInfo,
-    PropData:any,
+    PropData?:any,
     [propName:string]:any
 }
 
+export type ControlCategoryCollection={
+    [propName:string]:ControlInfo[]
+}
+
 export type ControlGenerate=(props:any,children:any)=>any;
+export type ControlGenerateCollection={
+    [propName:string]:ControlGenerate
+}
+
+export type PropEditorInfo={
+    Key:string,
+    Config?:any
+}
+
+export type PropEditorLoader={
+    Loader:()=>React.ReactNode
+    InitProp?:()=>void,
+    SetProp?:()=>void,
+    onPropChange?:()=>void
+}
+
+export type PropEditorCollection=PropEditorLoader[];

@@ -1,4 +1,4 @@
-import {GenerateUUID} from './Tool'
+import {GenerateUUID} from './Utils'
 
 //=================== Common Method =====================
 
@@ -145,7 +145,7 @@ function BubbleHandle(tree,handle){
     }
 }
 
-export default class LinkedTree {
+export default class LinkedTree<P={}> {
     //=================== Fields =====================
     _id:string;
     _parent:LinkedTree|null=null;
@@ -154,7 +154,7 @@ export default class LinkedTree {
     _children:LinkedTree[]=[];
     _firstChild:LinkedTree|null=null;
     _lastChild:LinkedTree|null=null;
-    Data:any;
+    Data:P;
 
     //=================== Properties =====================
     get ID(){return this._id;}
@@ -163,7 +163,7 @@ export default class LinkedTree {
     get Length(){return this._children.length;}
 
     //=================== Constructor =====================
-    constructor(data?:any,parent?:LinkedTree){
+    constructor(data:P,parent?:LinkedTree){
         this._id=GenerateUUID();
         this.Data=data;
         if(parent) parent.AddLast(this);
@@ -288,16 +288,28 @@ export default class LinkedTree {
 
     //=================== DataFormat =====================
     /**
-     * format: {data:{},children:[ {data:{},children:[]},{data:{},children:[]} ]}
+     * format: {Data:{},children:[ {data:{},children:[]},{data:{},children:[]} ]}
      */
-    ToLinkedTreeData(){
-        return eachTreeChildren(this,(current:LinkedTree,childen:any[])=>{
-            return {data:current.Data,childen:childen};
+    ToLinkedTreeData(format?:(data:P)=>any){
+        return eachTreeChildren(this,(current:LinkedTree<P>,childen:any[])=>{
+            return {data:format?format(current.Data):current.Data,childen:childen};
         });
     }
 
-    ToLinkedTreeJSON(){
-        return JSON.stringify(this.ToLinkedTreeData());
+    ToLinkedTreeJSON(format?:(data:P)=>any){
+        return JSON.stringify(this.ToLinkedTreeData(format));
+    }
+
+    /**
+     * linkedtree object: {data:{},children:[ {data:{},children:[]},{data:{},children:[]} ]}
+     */
+    ParseLinkedTreeString(treeDataStr:string,format:(data:any)=>any){
+        try{
+            let treeData=JSON.parse(treeDataStr);
+            /* no building */
+        }catch(e){
+            throw new Error('faild valid format string in parameter data');
+        }
     }
 
     //=================== Other =====================

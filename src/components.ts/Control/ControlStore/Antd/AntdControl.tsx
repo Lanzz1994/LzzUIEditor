@@ -1,10 +1,8 @@
 import * as Antd from 'antd';
-import {ControlGenerate} from '../../types';
-
-const temp:ControlGenerate=(props:any,children:any)=>{};
+import {ControlGenerate,ControlGenerateCollection} from '../../types';
 
 //General
-const Button:ControlGenerate=(props:any,children:any)=><Antd.Button {...props}>{children}</Antd.Button>;
+const Button:ControlGenerate=(props:any)=>{return <Antd.Button {...props}>{props.text}</Antd.Button>};
 const ButtonGroup:ControlGenerate=(props:any,children:any)=><Antd.Button.Group {...props}>{children}</Antd.Button.Group>;
 const Icon:ControlGenerate=(props:any)=><Antd.Icon {...props}/>
 
@@ -19,23 +17,23 @@ const Content:ControlGenerate=(props:any,children:any)=><Antd.Layout.Content {..
 const Footer:ControlGenerate=(props:any,children:any)=><Antd.Layout.Footer {...props}>{children}</Antd.Layout.Footer>;
 const Sider:ControlGenerate=(props:any,children:any)=><Antd.Layout.Sider {...props}>{children}</Antd.Layout.Sider>;
 
-export default {
+const AntdControls:ControlGenerateCollection={
     //General
-    "Button":Button,
-    "ButtonGroup":ButtonGroup,
-    "Icon":Icon,
+    Button,
+    ButtonGroup,
+    Icon,
 
     //把这些整理完后，衔接整个流程看看，Control,Info,Assemble 直接要怎么衔接定义
     //Layout
     //Grid
-    "Row":Row,
-    "Col":Col,
+    Row,
+    Col,
     //Layout
-    "Layout":Layout,
-    "Header":Header,
-    "Content":Content,
-    "Footer":Footer,
-    "Sider":Sider,
+    Layout,
+    Header,
+    Content,
+    Footer,
+    Sider,
 
     //Tabs 对于内嵌的自定义块要用什么处理比较合适？
 
@@ -49,3 +47,4 @@ export default {
 
     //Other
 };
+export {AntdControls};

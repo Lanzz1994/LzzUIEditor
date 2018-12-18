@@ -1,10 +1,10 @@
 import {ControlCategoryItem,ControlInfoBlockType} from './types'
-import {AntdControlInfos} from '../ControlStore/index';
+import {AntdControlInfoCategory} from '../ControlStore/index';
 
 const General:ControlCategoryItem={
     Key:'General',
     Title:'通用',
-    Infos:AntdControlInfos.General
+    Infos:AntdControlInfoCategory.General
 };
 const Layout:ControlCategoryItem={
     Key:'Layout',

@@ -1,6 +1,8 @@
 import * as React from 'react';
 import classNames from 'classnames';
+import LinkedTree from '../Utils/LinkedTree';
 import DragDropBlock from '../DragDrop/DragDropBlock';
+import {ElementSize,ElementPosition} from './types';
 
 // 元素当前的状态：默认（无操作），选中，鼠标经过，鼠标点击准备拖拽，拖拽中，放下（这些状态是互斥的，同时只能存在一个）
 // export type FrameworkElementStateType='normal'|'hover'|'drag'|'draging'|'draging-hover'|'drop';
@@ -13,19 +15,18 @@ import DragDropBlock from '../DragDrop/DragDropBlock';
 //     Drop='drop'
 // }
 
-export type FrameworkElementSize={width:number,height:number};
-export type FrameworkElementPosition={left:number,top:number};
-export type FrameworkElementStore={size:FrameworkElementSize,position:FrameworkElementPosition}&{};
-
 export interface FrameworkElementProps{
-    //size?:FrameworkElementSize;
-    //position?:FrameworkElementPosition;
-    //elementState?:FrameworkElementState;
-    //isSelected?:boolean;
-    
-    tree?:any;
-    onMouseOver?:(e:React.MouseEvent,tree:any)=>void;
-    onClick?:(e:React.MouseEvent,tree:any)=>void;
+    id:string;
+    tree:LinkedTree;
+    size?:ElementSize;
+    position?:ElementPosition;
+    onHoverFramework?:(tree:any)=>void,
+    onClickFramework?:(tree:any)=>void,
+
+    onBeginDragFramework?:(tree:any)=>any,
+    onDragingHoverFramework?:(tree:any)=>void
+    onDropFramework?:(tree:any)=>void,
+    onEndDragFramework?:(tree:any)=>void,
 }
 
 export default class FrameworkElement extends React.PureComponent<FrameworkElementProps>{
@@ -34,54 +35,65 @@ export default class FrameworkElement extends React.PureComponent<FrameworkEleme
         super(props);
     }
 
-    // componentWillReceiveProps(nextProps:FrameworkElementProps){
-    //     const currentIsSelected=this.props.isSelected
-    //     const {isSelected,elementState}=nextProps;
-    //     if(currentIsSelected!==isSelected){
-    //         this.setState({isSelected});
-    //     }
-    //     this.setState({elementState});
-    // }
-
-    beginDrag=(props:any,monitor:any,component:any)=>{
-
-        console.log(props,monitor,component);
-
-        return {};
-    }
-
-    hover=()=>{
-
-    }
-
     // 两种操作：加上 hover 状态，去除 hover 状态
     onMouseOver=(e:React.MouseEvent)=>{
-        if(typeof this.props.onMouseOver==='function'){
-            this.props.onMouseOver(e,this.props.tree);
+        const {onHoverFramework}=this.props;
+        if(onHoverFramework){
+            onHoverFramework(this.props.tree);
         }
         e.stopPropagation();
     }
 
     onClick=(e:React.MouseEvent)=>{
-        if(typeof this.props.onClick==='function'){
-            this.props.onClick(e,this.props.tree);
+        const {onClickFramework}=this.props;
+        if(onClickFramework){
+            onClickFramework(this.props.tree);
         }
         e.stopPropagation();
     }
 
-    render(){
-        const {size={width:10,height:10},position={left:10,top:10}}=this.props.tree.data||{};
-        
-        const {children} = this.props;
-        const {hover,onMouseOver,onClick,beginDrag}=this;
+    onBeginDragFramework=()=>{
+        const {onBeginDragFramework}=this.props;
+        if(onBeginDragFramework){
+            onBeginDragFramework(this.props.tree);
+        }
+        return {};
+    }
+    onDragingHoverFramework=()=>{
+        const {onDragingHoverFramework}=this.props;
+        if(onDragingHoverFramework){
+            onDragingHoverFramework(this.props.tree);
+        }
+    }
+    onDropFramework=()=>{
+        const {onDropFramework}=this.props;
+        if(onDropFramework){
+            onDropFramework(this.props.tree);
+        }
+    }
+    onEndDragFramework=()=>{
+        const {onEndDragFramework}=this.props;
+        if(onEndDragFramework){
+            onEndDragFramework(this.props.tree);
+        }
+    }
+
+    render(){        
+        const {id,children,size={width:10,height:10},position={left:10,top:10}} = this.props;
+        const {onMouseOver,onClick,onBeginDragFramework,onDragingHoverFramework,onDropFramework,onEndDragFramework}=this;
         return (
-            <DragDropBlock 
+            <DragDropBlock
+                id={id}
                 className={classNames('lz-framework-element')} 
                 style={{width:size.width,height:size.height,left:position.left,top:position.top}}
-                hover={hover}
-                onMouseOver={onMouseOver}
                 onClick={onClick}
-                beginDrag={beginDrag}
+                onMouseOver={onMouseOver}
+                
+                beginDrag={onBeginDragFramework}
+                hover={onDragingHoverFramework}
+                drop={onDropFramework}
+                endDrag={onEndDragFramework}
+
             >{children}</DragDropBlock>
         );
     }

@@ -2,13 +2,16 @@
 export default {
     namespace: 'InterfaceConfig',
     state: {
-        //LayoutArea
-        LayoutAreaSize:{width:1366,height:768},
-        LayoutAreaPosition:{left:5000/2-1366/2,top:5000/2-768/2},
-        //LayoutAreaShow:true,
+        LayoutAreaSetting:{
+            //size
+            width:1366,
+            height:768,
+            //position
+            left:5000/2-1366/2,
+            top:5000/2-768/2
+        }
         
         //GridAixs
-
     },
     reducers: {
 

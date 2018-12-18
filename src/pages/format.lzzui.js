@@ -49,3 +49,13 @@
 		}
 	};
 	//专属 uieditor 的js文件，解析js的到可视化编辑器，
+
+	var Project={
+		Name:'',
+		Pages:[
+			{
+				Name:'',
+				ComponentData:{},
+			}
+		]
+	}

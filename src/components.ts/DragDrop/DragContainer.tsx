@@ -1,16 +1,17 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import DragDropType from './DragDropType';
+import {CssBase} from './types';
 import {DragSource, DragSourceConnector, DragSourceMonitor, ConnectDragSource, ConnectDragPreview} from 'react-dnd';
 
 export interface DragContainerProps{
-	className?:string,
     connectDragSource?: ConnectDragSource,
 	connectDragPreview?: ConnectDragPreview,
 	dragPreview?:React.ReactElement<any>,
 	isDragging?: boolean,
 	beginDrag?:(props:any,monitor:any,component:any)=>{},
-	endDrag?:(props:any, monitor:any, component:any)=>void
+	endDrag?:(props:any, monitor:any, component:any)=>void,
+	[propName:string]:any
 }
 
 // 定义事件处理
@@ -36,7 +37,7 @@ export default DragSource(DragDropType.DragDrop,SourceEvents,
 	connectDragPreview: connect.dragPreview(),
 	isDragging: monitor.isDragging(),
 }))(
-class DragContainer extends React.PureComponent<DragContainerProps>{
+class DragContainer extends React.PureComponent<DragContainerProps&CssBase>{
 
 	monitor:DragSourceMonitor;
 
@@ -48,8 +49,8 @@ class DragContainer extends React.PureComponent<DragContainerProps>{
 	}
 
     render(){
-		const {connectDragSource,className,children}=this.props;
-		const html=(<div className={classNames("lz-drag-container",className)}>{children}</div>);
+		const {id,className,style,connectDragSource,children}=this.props;
+		const html=(<div id={id} className={classNames("lz-drag-container",className)} style={style}>{children}</div>);
         return connectDragSource?connectDragSource(html):html;
     }
 })

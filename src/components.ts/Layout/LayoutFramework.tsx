@@ -1,40 +1,76 @@
 import * as React from 'react';
-import LinkedTree from '../Utils/LinkedTree'
-import FrameworkElement,{FrameworkElementStore,FrameworkElementSize,FrameworkElementPosition} from './FrameworkElement';
+import LinkedTree from '../Utils/LinkedTree';
+import {DropContainer} from '../DragDrop/index';
+import {framework_id_prefix,LayoutTreeData} from './types'
+import FrameworkElement from './FrameworkElement';
+import {LayoutBaseProps} from './types';
 
 interface LayoutFrameworkProps{
-    layoutData:LinkedTree;
-    interfaceConfig?:any;
-};
+    onHoverFramework?:(tree:LinkedTree<LayoutTreeData>)=>void,
+    onClickFramework?:(tree:LinkedTree<LayoutTreeData>)=>void,
+    onDropFramework?:(tree:LinkedTree<LayoutTreeData>)=>void,
+    onDragingHoverFramework?:(tree:LinkedTree<LayoutTreeData>)=>void,
 
-// 布局容器
-export default class LayoutFramework extends React.Component<LayoutFrameworkProps>{
+    onHoverExcludeFramework?:(tree:LinkedTree<LayoutTreeData>)=>void,
+    onClickExcludeFramework?:(tree:LinkedTree<LayoutTreeData>)=>void
+}
 
-    onHoverFrameworkElement=(e:React.MouseEvent,tree:any)=>{
-        // const {dispatch} = this.props;
-        // dispatch({type:'DataCore/ChangeNode',updateStates:{CurrentNode:tree}});
+export default class LayoutFramework extends React.Component<LayoutFrameworkProps&LayoutBaseProps>{
+
+    onHoverRootFramework=(e:React.MouseEvent)=>{
+        const {onHoverExcludeFramework,layoutData}=this.props;
+        if(typeof onHoverExcludeFramework==='function'){
+            onHoverExcludeFramework(layoutData);
+        }
+        e.stopPropagation();
     }
-
-    onClickFrameworkElement=(e:React.MouseEvent,tree:any)=>{
-        //const {dispatch} = this.props;
-        
+    onClickRootFramework=(e:React.MouseEvent)=>{
+        const {onClickExcludeFramework,layoutData}=this.props;
+        if(typeof onClickExcludeFramework==='function'){
+            onClickExcludeFramework(layoutData);
+        }
+        e.stopPropagation();
     }
-
-
-    // 在把选中，经过 单独提取出来成为一个套件，让布局专心辅助数据操作，不要参与到页面的输入交互中来
+    onDropRootFramework=(props:any,monitor:any)=>{
+        const {onDropFramework,layoutData}=this.props;
+        if(typeof onDropFramework==='function'&&!monitor.didDrop()){
+            onDropFramework(layoutData);
+        }
+    }
+    onDragingHoverRootFramework=(props:any,monitor:any)=>{
+        const {onDragingHoverFramework,layoutData}=this.props;
+        if(typeof onDragingHoverFramework==='function'&&!monitor.didDrop()){
+            onDragingHoverFramework(layoutData);
+        }
+    }
 
     render(){
-        const {layoutData,interfaceConfig}=this.props;
-        const {onHoverFrameworkElement}=this;
+        const {layoutData,interfaceConfig,onHoverFramework,onClickFramework,onDropFramework,onDragingHoverFramework}=this.props;
+        const {onHoverRootFramework,onClickRootFramework,onDropRootFramework,onDragingHoverRootFramework}=this;
+        const frames=layoutData.ForEachStartLeaf((current:LinkedTree<LayoutTreeData>,children:any[])=>{
+            const id=framework_id_prefix+current.ID;
+            const data=current.Data;
 
-        const frames=layoutData.ForEachStartLeaf((current:LinkedTree,children:any[])=>{
             return current.HasParent?
-                (<FrameworkElement key={current.ID} onMouseOver={onHoverFrameworkElement} tree={current}>{children}</FrameworkElement>)
+                <FrameworkElement
+                    id={id}
+                    key={id}
+                    tree={current}
+                    size={data.Size}
+                    position={data.Position}
+                    onHoverFramework={onHoverFramework}
+                    onClickFramework={onClickFramework}
+                    onDropFramework={onDropFramework}
+                    onDragingHoverFramework={onDragingHoverFramework}
+                >{children}</FrameworkElement>
                 :children;
         });
-
-        return (
-            <div className="lz-layout-framework" style={interfaceConfig}>{frames}</div>
-        );
+        return (<DropContainer
+            id={framework_id_prefix+layoutData.ID} className="lz-layout-framework" style={interfaceConfig}
+            hover={onDragingHoverRootFramework}
+            drop={onDropRootFramework}
+            onClick={onClickRootFramework}
+            onMouseOver={onHoverRootFramework}
+            >{frames}</DropContainer>);
     }
 }

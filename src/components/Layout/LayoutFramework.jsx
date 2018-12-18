@@ -1,27 +1,47 @@
 import * as React from 'react';
+import { DropContainer } from '../DragDrop/index';
+import { framework_id_prefix } from './types';
 import FrameworkElement from './FrameworkElement';
-;
-// 布局容器
 export default class LayoutFramework extends React.Component {
     constructor() {
         super(...arguments);
-        this.onHoverFrameworkElement = (e, tree) => {
-            // const {dispatch} = this.props;
-            // dispatch({type:'DataCore/ChangeNode',updateStates:{CurrentNode:tree}});
+        this.onHoverRootFramework = (e) => {
+            const { onHoverExcludeFramework, layoutData } = this.props;
+            if (typeof onHoverExcludeFramework === 'function') {
+                onHoverExcludeFramework(layoutData);
+            }
+            e.stopPropagation();
         };
-        this.onClickFrameworkElement = (e, tree) => {
-            //const {dispatch} = this.props;
+        this.onClickRootFramework = (e) => {
+            const { onClickExcludeFramework, layoutData } = this.props;
+            if (typeof onClickExcludeFramework === 'function') {
+                onClickExcludeFramework(layoutData);
+            }
+            e.stopPropagation();
+        };
+        this.onDropRootFramework = (props, monitor) => {
+            const { onDropFramework, layoutData } = this.props;
+            if (typeof onDropFramework === 'function' && !monitor.didDrop()) {
+                onDropFramework(layoutData);
+            }
+        };
+        this.onDragingHoverRootFramework = (props, monitor) => {
+            const { onDragingHoverFramework, layoutData } = this.props;
+            if (typeof onDragingHoverFramework === 'function' && !monitor.didDrop()) {
+                onDragingHoverFramework(layoutData);
+            }
         };
     }
-    // 在把选中，经过 单独提取出来成为一个套件，让布局专心辅助数据操作，不要参与到页面的输入交互中来
     render() {
-        const { layoutData, interfaceConfig } = this.props;
-        const { onHoverFrameworkElement } = this;
+        const { layoutData, interfaceConfig, onHoverFramework, onClickFramework, onDropFramework, onDragingHoverFramework } = this.props;
+        const { onHoverRootFramework, onClickRootFramework, onDropRootFramework, onDragingHoverRootFramework } = this;
         const frames = layoutData.ForEachStartLeaf((current, children) => {
+            const id = framework_id_prefix + current.ID;
+            const data = current.Data;
             return current.HasParent ?
-                (<FrameworkElement key={current.ID} onMouseOver={onHoverFrameworkElement} tree={current}>{children}</FrameworkElement>)
+                <FrameworkElement id={id} key={id} tree={current} size={data.Size} position={data.Position} onHoverFramework={onHoverFramework} onClickFramework={onClickFramework} onDropFramework={onDropFramework} onDragingHoverFramework={onDragingHoverFramework}>{children}</FrameworkElement>
                 : children;
         });
-        return (<div className="lz-layout-framework" style={interfaceConfig}>{frames}</div>);
+        return (<DropContainer id={framework_id_prefix + layoutData.ID} className="lz-layout-framework" style={interfaceConfig} hover={onDragingHoverRootFramework} drop={onDropRootFramework} onClick={onClickRootFramework} onMouseOver={onHoverRootFramework}>{frames}</DropContainer>);
     }
 }

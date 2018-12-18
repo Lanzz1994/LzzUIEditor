@@ -1,4 +1,4 @@
-import { GenerateUUID } from './Tool';
+import { GenerateUUID } from './Utils';
 //=================== Common Method =====================
 function setFirst(tree, target) {
     if (target._firstChild && target.Length > 1) {
