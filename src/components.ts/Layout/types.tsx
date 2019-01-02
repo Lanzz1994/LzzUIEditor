@@ -8,7 +8,8 @@ export type ElementSize={width:number,height:number};
 export type ElementPosition={left:number,top:number};
 export type LayoutTreeData=ControlData&{
     Size:ElementSize,
-    Position:ElementPosition
+    Position:ElementPosition,
+    RootPosition:ElementPosition
 };
 
 export type InterfaceConfig={}&ElementSize&ElementPosition;
@@ -18,6 +19,4 @@ export type LayoutBaseProps = {
     interfaceConfig?:InterfaceConfig;
 }
 
-export type LayoutHandler={
-    
-}
+export type FrameworkState='normal'|'selected'|'hover'|'draging-hover';

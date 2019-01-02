@@ -1,12 +1,13 @@
-import { AntdControlInfoCategory } from '../ControlStore/index';
+import { HtmlControlInfoCategory, AntdControlInfoCategory } from '../ControlStore/index';
 const General = {
     Key: 'General',
     Title: '通用',
-    Infos: AntdControlInfoCategory.General
+    Infos: AntdControlInfoCategory.General.concat(HtmlControlInfoCategory.General)
 };
 const Layout = {
     Key: 'Layout',
-    Title: '布局'
+    Title: '布局',
+    Infos: HtmlControlInfoCategory.Layout
 };
 const Navigation = {
     Key: 'Navigation',

@@ -15,7 +15,7 @@ const Button:ControlInfo={
     Introduction:{
         Name:'按钮',
         ShortName:'按钮',
-        Icon:'button',
+        Icon:'icon-button-component',
         Detail:'按钮用于开始一个即时操作'
     },
     Props:[
@@ -39,7 +39,7 @@ const ButtonGroup:ControlInfo={
     Introduction:{
         Name:'按钮组',
         ShortName:'按钮组',
-        Icon:'button',
+        Icon:'icon-anniuzu',
     },
     Props:[{PropName:'size',Name:'尺寸',EditorInfo:{Key:'SelectEditor',Config:ButtonSizeConfig}}],
     

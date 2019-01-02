@@ -12,7 +12,8 @@ interface LayoutFrameworkProps{
     onDragingHoverFramework?:(tree:LinkedTree<LayoutTreeData>)=>void,
 
     onHoverExcludeFramework?:(tree:LinkedTree<LayoutTreeData>)=>void,
-    onClickExcludeFramework?:(tree:LinkedTree<LayoutTreeData>)=>void
+    onClickExcludeFramework?:(tree:LinkedTree<LayoutTreeData>)=>void,
+    onDragingHoverExcludeFramework?:(tree:LinkedTree<LayoutTreeData>)=>void
 }
 
 export default class LayoutFramework extends React.Component<LayoutFrameworkProps&LayoutBaseProps>{
@@ -38,9 +39,9 @@ export default class LayoutFramework extends React.Component<LayoutFrameworkProp
         }
     }
     onDragingHoverRootFramework=(props:any,monitor:any)=>{
-        const {onDragingHoverFramework,layoutData}=this.props;
-        if(typeof onDragingHoverFramework==='function'&&!monitor.didDrop()){
-            onDragingHoverFramework(layoutData);
+        const {onDragingHoverExcludeFramework,layoutData}=this.props;
+        if(typeof onDragingHoverExcludeFramework==='function'&&monitor.isOver({shallow:true})){
+            onDragingHoverExcludeFramework(layoutData);
         }
     }
 

@@ -1,3 +1,4 @@
+import * as React from 'react';
 import * as Antd from 'antd';
 //General
 const Button = (props) => { return <Antd.Button {...props}>{props.text}</Antd.Button>; };

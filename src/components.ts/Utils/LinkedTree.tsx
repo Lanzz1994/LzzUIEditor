@@ -1,6 +1,7 @@
 import {GenerateUUID} from './Utils'
 
 //=================== Common Method =====================
+type TreeStructure={data:any,children:TreeStructure[]};
 
 function setFirst(tree:LinkedTree,target:LinkedTree):void{
     if(target._firstChild&&target.Length>1){
@@ -136,6 +137,16 @@ function eachTreeParent(tree:LinkedTree,handle:(current:LinkedTree,parent?:any)=
     }
 }
 
+function RecursionHandle(tree:TreeStructure,handle:(data:any,parent?:any)=>any,parent?:any){
+    let index=0;
+    let subTree:TreeStructure=tree.children[index];
+    parent=handle(tree,parent);
+    while(subTree){
+        RecursionHandle(subTree,handle,parent);
+        subTree=tree.children[++index];
+    }
+}
+
 //冒泡操作
 function BubbleHandle(tree,handle){
     let current=tree,state=true;
@@ -163,9 +174,15 @@ export default class LinkedTree<P={}> {
     get Length(){return this._children.length;}
 
     //=================== Constructor =====================
-    constructor(data:P,parent?:LinkedTree){
+    constructor(data?:P|string,parent?:LinkedTree){
         this._id=GenerateUUID();
-        this.Data=data;
+        if(data){
+            if(typeof data==='string'){
+                this.ParseLinkedTreeString(data);
+            }else{
+                this.Data=data;
+            }
+        }
         if(parent) parent.AddLast(this);
     }
 
@@ -288,25 +305,33 @@ export default class LinkedTree<P={}> {
 
     //=================== DataFormat =====================
     /**
-     * format: {Data:{},children:[ {data:{},children:[]},{data:{},children:[]} ]}
+     * format: {data:{},children:[ {data:{},children:[]},{data:{},children:[]} ]}
      */
-    ToLinkedTreeData(format?:(data:P)=>any){
-        return eachTreeChildren(this,(current:LinkedTree<P>,childen:any[])=>{
-            return {data:format?format(current.Data):current.Data,childen:childen};
-        });
-    }
-
     ToLinkedTreeJSON(format?:(data:P)=>any){
-        return JSON.stringify(this.ToLinkedTreeData(format));
+        return JSON.stringify(eachTreeChildren(this,(current:LinkedTree<P>,childen:any[])=>{
+            return {data:format?format(current.Data):current.Data,children:childen};
+        }));
     }
 
     /**
-     * linkedtree object: {data:{},children:[ {data:{},children:[]},{data:{},children:[]} ]}
+     * treeDataStr:linkedtree object: {data:{},children:[ {data:{},children:[]},{data:{},children:[]} ]}
+     * cover:indicates the new data whether replacing original data,
+     *       if 'false' the new data being appended to the end of root's children
+     * format:the specified data converts to the specified generics (type of LinkedTedd.Data)
      */
-    ParseLinkedTreeString(treeDataStr:string,format:(data:any)=>any){
+    ParseLinkedTreeString(treeDataStr:string,cover:boolean=false,format?:(data:any)=>P){
         try{
-            let treeData=JSON.parse(treeDataStr);
-            /* no building */
+            let treeData:TreeStructure=JSON.parse(treeDataStr) as TreeStructure,root=this;
+            if(cover){root.Clear()}
+            RecursionHandle(treeData,(current:any,parent?:LinkedTree)=>{
+                let data:P=format?format(current.data):current.data as P;
+                if(parent){
+                    return new LinkedTree(data,parent);
+                }else{
+                    root.Data=data;
+                    return root;
+                }
+            });
         }catch(e){
             throw new Error('faild valid format string in parameter data');
         }
@@ -316,6 +341,7 @@ export default class LinkedTree<P={}> {
     ForEach(fn:(current:LinkedTree,parent:any)=>any):any{
         return eachTreeParent(this,fn);
     }
+
     ForEachStartLeaf(fn:(current:LinkedTree,childen:any[],prev?:any)=>any):any{
         return eachTreeChildren(this,fn);
     }

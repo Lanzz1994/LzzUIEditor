@@ -2,7 +2,7 @@ import * as React from 'react';
 import { GenerateControl } from '../Control/index';
 export default class LayoutComponent extends React.Component {
     render() {
-        const { layoutData, interfaceConfig } = this.props;
+        const { layoutData } = this.props;
         const controls = layoutData.ForEachStartLeaf((current, children) => {
             if (current.HasParent) {
                 let data = current.Data;

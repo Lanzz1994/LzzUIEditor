@@ -10,12 +10,15 @@ class UILeft extends React.PureComponent{
 
     beginDragControl=(Info)=>{
         const {dispatch} = this.props;
-        dispatch({type:'LayoutCore/UpdateStates',updateStates:{DragNode:new LinkedTree({Info:Info,PropData:Info.DefaultProps||{}})}});
+        dispatch({type:'LayoutCore/UpdateStates',updateStates:{
+            CurrentHandler:'AddLast',
+            DragNode:new LinkedTree({Info:Info,PropData:Info.DefaultProps||{}})}
+        });
     }
 
     endDragControl=(Info)=>{
         const {dispatch} = this.props;
-        dispatch({type:'LayoutCore/UpdateStates',updateStates:{DragNode:null,DropNode:null}});
+        dispatch({type:'LayoutCore/UpdateStates',updateStates:{DragNode:null}});
     }
 
     render(){

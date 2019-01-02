@@ -26,15 +26,15 @@ export default class FrameworkElement extends React.PureComponent {
             }
             return {};
         };
-        this.onDragingHoverFramework = () => {
+        this.onDragingHoverFramework = (props, monitor) => {
             const { onDragingHoverFramework } = this.props;
-            if (onDragingHoverFramework) {
+            if (onDragingHoverFramework && monitor.isOver({ shallow: true })) {
                 onDragingHoverFramework(this.props.tree);
             }
         };
-        this.onDropFramework = () => {
+        this.onDropFramework = (props, monitor) => {
             const { onDropFramework } = this.props;
-            if (onDropFramework) {
+            if (onDropFramework && !monitor.didDrop()) {
                 onDropFramework(this.props.tree);
             }
         };
@@ -46,7 +46,7 @@ export default class FrameworkElement extends React.PureComponent {
         };
     }
     render() {
-        const { id, children, size = { width: 10, height: 10 }, position = { left: 10, top: 10 } } = this.props;
+        const { id, children, size = { width: 0, height: 0 }, position = { left: 0, top: 0 } } = this.props;
         const { onMouseOver, onClick, onBeginDragFramework, onDragingHoverFramework, onDropFramework, onEndDragFramework } = this;
         return (<DragDropBlock id={id} className={classNames('lz-framework-element')} style={{ width: size.width, height: size.height, left: position.left, top: position.top }} onClick={onClick} onMouseOver={onMouseOver} beginDrag={onBeginDragFramework} hover={onDragingHoverFramework} drop={onDropFramework} endDrag={onEndDragFramework}>{children}</DragDropBlock>);
     }

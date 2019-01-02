@@ -1,5 +1,4 @@
 import { GenerateUUID } from './Utils';
-//=================== Common Method =====================
 function setFirst(tree, target) {
     if (target._firstChild && target.Length > 1) {
         tree._next = target._firstChild;
@@ -135,6 +134,15 @@ function eachTreeParent(tree, handle, parent) {
         subTree = subTree._next;
     }
 }
+function RecursionHandle(tree, handle, parent) {
+    let index = 0;
+    let subTree = tree.children[index];
+    parent = handle(tree, parent);
+    while (subTree) {
+        RecursionHandle(subTree, handle, parent);
+        subTree = tree.children[++index];
+    }
+}
 //冒泡操作
 function BubbleHandle(tree, handle) {
     let current = tree, state = true;
@@ -153,7 +161,14 @@ export default class LinkedTree {
         this._firstChild = null;
         this._lastChild = null;
         this._id = GenerateUUID();
-        this.Data = data;
+        if (data) {
+            if (typeof data === 'string') {
+                this.ParseLinkedTreeString(data);
+            }
+            else {
+                this.Data = data;
+            }
+        }
         if (parent)
             parent.AddLast(this);
     }
@@ -268,13 +283,37 @@ export default class LinkedTree {
     /**
      * format: {data:{},children:[ {data:{},children:[]},{data:{},children:[]} ]}
      */
-    ToLinkedTreeData() {
-        return eachTreeChildren(this, (current, childen) => {
-            return { data: current.Data, childen: childen };
-        });
+    ToLinkedTreeJSON(format) {
+        return JSON.stringify(eachTreeChildren(this, (current, childen) => {
+            return { data: format ? format(current.Data) : current.Data, children: childen };
+        }));
     }
-    ToLinkedTreeJSON() {
-        return JSON.stringify(this.ToLinkedTreeData());
+    /**
+     * treeDataStr:linkedtree object: {data:{},children:[ {data:{},children:[]},{data:{},children:[]} ]}
+     * cover:indicates the new data whether replacing original data,
+     *       if 'false' the new data being appended to the end of root's children
+     * format:the specified data converts to the specified generics (type of LinkedTedd.Data)
+     */
+    ParseLinkedTreeString(treeDataStr, cover = false, format) {
+        try {
+            let treeData = JSON.parse(treeDataStr), root = this;
+            if (cover) {
+                root.Clear();
+            }
+            RecursionHandle(treeData, (current, parent) => {
+                let data = format ? format(current.data) : current.data;
+                if (parent) {
+                    return new LinkedTree(data, parent);
+                }
+                else {
+                    root.Data = data;
+                    return root;
+                }
+            });
+        }
+        catch (e) {
+            throw new Error('faild valid format string in parameter data');
+        }
     }
     //=================== Other =====================
     ForEach(fn) {

@@ -16,17 +16,17 @@ import {ElementSize,ElementPosition} from './types';
 // }
 
 export interface FrameworkElementProps{
-    id:string;
-    tree:LinkedTree;
-    size?:ElementSize;
-    position?:ElementPosition;
+    id:string,
+    tree:LinkedTree,
+    size?:ElementSize,
+    position?:ElementPosition,
     onHoverFramework?:(tree:any)=>void,
     onClickFramework?:(tree:any)=>void,
 
     onBeginDragFramework?:(tree:any)=>any,
     onDragingHoverFramework?:(tree:any)=>void
     onDropFramework?:(tree:any)=>void,
-    onEndDragFramework?:(tree:any)=>void,
+    onEndDragFramework?:(tree:any)=>void
 }
 
 export default class FrameworkElement extends React.PureComponent<FrameworkElementProps>{
@@ -59,15 +59,15 @@ export default class FrameworkElement extends React.PureComponent<FrameworkEleme
         }
         return {};
     }
-    onDragingHoverFramework=()=>{
+    onDragingHoverFramework=(props:any,monitor:any)=>{
         const {onDragingHoverFramework}=this.props;
-        if(onDragingHoverFramework){
+        if(onDragingHoverFramework&&monitor.isOver({shallow:true})){
             onDragingHoverFramework(this.props.tree);
         }
     }
-    onDropFramework=()=>{
+    onDropFramework=(props:any,monitor:any)=>{
         const {onDropFramework}=this.props;
-        if(onDropFramework){
+        if(onDropFramework&&!monitor.didDrop()){
             onDropFramework(this.props.tree);
         }
     }
@@ -79,7 +79,7 @@ export default class FrameworkElement extends React.PureComponent<FrameworkEleme
     }
 
     render(){        
-        const {id,children,size={width:10,height:10},position={left:10,top:10}} = this.props;
+        const {id,children,size={width:0,height:0},position={left:0,top:0}} = this.props;
         const {onMouseOver,onClick,onBeginDragFramework,onDragingHoverFramework,onDropFramework,onEndDragFramework}=this;
         return (
             <DragDropBlock

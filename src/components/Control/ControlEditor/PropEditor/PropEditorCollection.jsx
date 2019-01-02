@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { Select, Input, Switch } from 'antd';
 //const DividerEditor=(props)=>(<Divider key={props.key}>{props.label}</Divider>);
 const TextEditor = {

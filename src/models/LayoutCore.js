@@ -1,23 +1,18 @@
-import update from 'immutability-helper'
-import LinkedTree from '../components/utils/LinkedTree'
+import {LinkedTree,UndoContext} from '../components/utils/index';
 
-//let partTree=new LinkedTree({});
+//因为页面集合是树形的，所以这个模型只是用来解决单个页面实例的布局操作
+//激活其他页面时，这里需要重新加载一套数据
 
-// let child=new LinkedTree({Info:{Key:'Antd.ButtonGroup'},PropData:{}},partTree);
-// let btn1=new LinkedTree({Info:{Key:'Antd.Button'},PropData:{}},child);
-// let btn2=new LinkedTree({Info:{Key:'Antd.Button'},PropData:{}},child);
-// new LinkedTree({Info:{Key:'Html.Text'},PropData:{text:'按钮1'}},btn1);
-// new LinkedTree({Info:{Key:'Html.Text'},PropData:{text:'按钮2'}},btn2);
-
-// let child2=new LinkedTree({name:'2'},partTree);
-// new LinkedTree({name:'2-1'},child2);
-// new LinkedTree({name:'2-2'},child2);
-
+//撤消实例是有页面激活时实例化的，PartTreeCore也是
 export default {
     namespace: 'LayoutCore',//LayoutCore
     state: {
+        //UICenter
         //a random number for force updateing deep fields in Model
         ResetRenderSign:'',
+
+        //undo and redo operations
+        UndoContext:new UndoContext(),
 
         //a instance of data structure for describing component layout
         PartTreeCore:new LinkedTree({Info:{}}),
@@ -26,7 +21,7 @@ export default {
         CurrentHandler:null,
 
         //current node with mouse hovering 
-        CurrentNode:null,
+        HoverNode:null,
 
         //selected node by mouse clicks
         SelectedNode:null,
@@ -38,28 +33,33 @@ export default {
         DragNode:null,
 
         //the node after mouse upping to drop
-        DropNode:null
+        //DropNode:null
+
+        //LayoutContextTool
+        StaticState:'normal',
+        HoverState:'normal',
+        DragState:'normal',
+        StaticLayout:{width:0,height:0,left:0,top:0},
+        HoverLayout:{width:0,height:0,left:0,top:0},
+        DragLayout:{width:0,height:0,left:0,top:0}
     },
     reducers: {
         'ResetRender'(state){
-            const ResetRenderSign=Math.random();
-            return {...state,ResetRenderSign};
-        },
-        'UpdateStates'(state,{updateStates}){
-            return {...state,...updateStates}
-        },
-        'SetNode'(state,{updateStates}){
-            let {CurrentNode,SelectedNode,DragingNode}=updateStates;
-            if(CurrentNode!==undefined)state.CurrentNode=CurrentNode;
-            if(SelectedNode!==undefined)state.SelectedNode=SelectedNode;
-            if(DragingNode!==undefined)state.DragingNode=DragingNode;
-            state.ResetRender=Math.random();
+            state.ResetRenderSign=Math.random();
             return state;
         },
-
-        'AddNode'(state){},
-        'CopyNode'(state){},
-        'RemoveNode'(state){},
-        'AdMoveNodedNode'(state){},
+        'UpdateStates'(state,{updateStates}){
+            return {...state,...updateStates};
+        },
+        'UndoRedo'(state,{method}){
+            const {UndoContext}=state;
+            let tree=(method==='Undo'?UndoContext.Undo():UndoContext.Redo());
+            if(tree){
+                state.PartTreeCore=tree;
+                state.StaticState='normal';
+                state.MoveState='normal';
+            }
+            return state;
+        }
     }
 };

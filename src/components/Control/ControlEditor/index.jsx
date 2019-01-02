@@ -1,2 +1,5 @@
+import CssEditor from './CssEditor/index';
+import PartTreeEditor from './PartTreeEditor';
 import PropEditor from './PropEditor/PropEditor';
-export { PropEditor };
+import '../../../components.ts/Control/ControlEditor/style/index';
+export { CssEditor, PartTreeEditor, PropEditor };

@@ -26,9 +26,9 @@ export default class LayoutFramework extends React.Component {
             }
         };
         this.onDragingHoverRootFramework = (props, monitor) => {
-            const { onDragingHoverFramework, layoutData } = this.props;
-            if (typeof onDragingHoverFramework === 'function' && !monitor.didDrop()) {
-                onDragingHoverFramework(layoutData);
+            const { onDragingHoverExcludeFramework, layoutData } = this.props;
+            if (typeof onDragingHoverExcludeFramework === 'function' && monitor.isOver({ shallow: true })) {
+                onDragingHoverExcludeFramework(layoutData);
             }
         };
     }

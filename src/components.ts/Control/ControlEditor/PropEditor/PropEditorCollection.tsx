@@ -1,3 +1,4 @@
+import * as React from 'react';
 import {Divider,Select,Input,Switch} from 'antd';
 import {PropEditorLoader} from '../../types';
 import {SelectConfig} from './PropEditorConfig'

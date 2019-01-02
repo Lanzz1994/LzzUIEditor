@@ -1,14 +1,15 @@
-import {ControlCategoryItem,ControlInfoBlockType} from './types'
-import {AntdControlInfoCategory} from '../ControlStore/index';
+import {ControlCategoryItem,ControlInfoBlockType} from './types';
+import {HtmlControlInfoCategory,AntdControlInfoCategory} from '../ControlStore/index';
 
 const General:ControlCategoryItem={
     Key:'General',
     Title:'通用',
-    Infos:AntdControlInfoCategory.General
+    Infos:AntdControlInfoCategory.General.concat(HtmlControlInfoCategory.General)
 };
 const Layout:ControlCategoryItem={
     Key:'Layout',
-    Title:'布局'
+    Title:'布局',
+    Infos:HtmlControlInfoCategory.Layout
 };
 const Navigation:ControlCategoryItem={
     Key:'Navigation',

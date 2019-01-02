@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'dva';
-import {Layout} from 'antd';
+import {Layout,Button} from 'antd';
 import {DragDropBoard} from '../components/DragDrop/index';
+import {UpdateFrameworkLayout} from '../components/Layout/index';
 import {scrollToCenter} from '../utils/dom';
 import UICenter from './UICenter';
 import UILeft from './UILeft';
@@ -26,6 +27,15 @@ class LzzUIEditor extends React.PureComponent{
     window.PartTreeCore=LayoutCore.PartTreeCore;
   }
 
+  updateLayout(method){
+    this.props.dispatch({type:'LayoutCore/UndoRedo',method:method});
+    setTimeout(()=>{
+      UpdateFrameworkLayout(this.props.LayoutCore.PartTreeCore,window.frames[0].document);
+      window.PartTreeCore=this.props.LayoutCore.PartTreeCore;
+      window.LayoutComponentIframe.ResetRender();
+    },200);
+  }
+
   render(){
     const {LzzUICenter}=this;
     const {LayoutAreaSetting} = this.props.InterfaceConfig;
@@ -33,7 +43,8 @@ class LzzUIEditor extends React.PureComponent{
     return(
       <Layout className="lz-ui-wraper">
           <Header className="lz-ui-header">
-            Header
+            <Button onClick={()=>{this.updateLayout('Undo')}}>撤消</Button>&nbsp;
+            <Button onClick={()=>{this.updateLayout('Redo')}}>恢复</Button>
           </Header>
           <DragDropBoard>
               <Layout className="lz-ui-work-area">

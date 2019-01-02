@@ -1,3 +1,4 @@
+import * as React from 'react';
 import * as Antd from 'antd';
 import {ControlGenerate,ControlGenerateCollection} from '../../types';
 

@@ -15,4 +15,6 @@ export default class LayoutComponentIframe extends React.PureComponent{
     render(){
         return <LayoutComponent layoutData={window.parent.PartTreeCore}/>;
     }
+
+    
 }

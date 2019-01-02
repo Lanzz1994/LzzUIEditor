@@ -1,5 +1,7 @@
+import * as React from 'react';
 import {PureComponent} from 'react'
 import {DragContainer} from '../../DragDrop/index';
+import {IconFont} from '../../Tool/index'
 import {ControlInfo} from '../types';
 
 interface ControlInfoBlockProps{
@@ -26,7 +28,7 @@ export default class ControlInfoBlock extends PureComponent<ControlInfoBlockProp
         const {Introduction={}}=this.props.Info;
         
         const icon = typeof Introduction.Icon==="string"?
-              <i className={"iconfont icon-" + Introduction.Icon} />:Introduction.Icon;
+            <IconFont type={Introduction.Icon}/>:Introduction.Icon;
 
         return (
             <DragContainer className="lz-control-info-block" beginDrag={beginDrag} endDrag={endDrag}>
