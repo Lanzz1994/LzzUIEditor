@@ -3,8 +3,12 @@ import { Tooltip, Dropdown, Icon, Menu } from 'antd';
 import { IconFont } from '../Tool/index';
 import classNames from 'classnames';
 export default class LayoutHandleTool extends React.PureComponent {
+    constructor(props) {
+        super(props);
+        this._toolRef = React.createRef();
+    }
     render() {
-        const { staticState, staticLayout, hoverState, hoverLayout, dragState, dragLayout, interfaceConfig } = this.props;
+        const { staticState, staticLayout, hoverState, hoverLayout, dragState, dragLayout, interfaceConfig, hiddenToolbar } = this.props;
         const moveMenus = (<Menu className="lz-context-tool">
                 <Menu.Item key="0">
                     <Tooltip placement="right" title="前移">
@@ -56,8 +60,8 @@ export default class LayoutHandleTool extends React.PureComponent {
                     </Tooltip>
                 </Menu.Item>
             </Menu>);
-        return (<div className="lz-layout-context-tools" style={{ left: interfaceConfig.left, top: interfaceConfig.top }}>
-                <div className={classNames("lz-context-tool bar hover-bar", hoverState)} style={{ left: hoverLayout.left, top: hoverLayout.top }}>
+        return (<div className="lz-layout-context-tools" style={{ left: interfaceConfig.left, top: interfaceConfig.top }} ref={this._toolRef} onMouseOver={(e) => { e.stopPropagation(); }}>
+                <div className={classNames("lz-context-tool bar hover-bar", hiddenToolbar ? 'normal' : hoverState)} style={{ left: hoverLayout.left, top: hoverLayout.top }}>
                     <Dropdown overlay={moveMenus} placement="bottomCenter">
                         <Tooltip placement="top" title="定位">
                             <IconFont type="icon-dingwei1"/>

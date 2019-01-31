@@ -1,13 +1,14 @@
+import * as React from 'react';
+import LayoutInfo from './Controls/Layout/LayoutInfo';
+import { DataDisplayInfo } from './Controls/DataDisplay/index';
 //Button
 const ButtonThemeConfig = {
-    default: 'default',
-    options: [{ value: 'default', text: '默认' }, { value: 'primary', text: '主要' }, { value: 'dashed', text: '虚线' }, { value: 'danger', text: '危险' }]
+    options: [{ value: 'default', label: '默认' }, { value: 'primary', label: '主要' }, { value: 'dashed', label: '虚线' }, { value: 'danger', label: '危险' }]
 };
 const ButtonSizeConfig = {
-    default: 'default',
-    options: [{ value: 'default', text: '默认' }, { value: 'small', text: '小' }, { value: 'large', text: '大' }]
+    options: [{ value: 'default', label: '默认' }, { value: 'small', label: '小' }, { value: 'large', label: '大' }]
 };
-const Button = {
+const ButtonInfo = {
     Key: 'Antd.Button',
     Introduction: {
         Name: '按钮',
@@ -17,20 +18,20 @@ const Button = {
     },
     Props: [
         { PropName: 'text', Name: '文本', EditorInfo: { Key: 'TextEditor' } },
-        { PropName: 'type', Name: '类型', EditorInfo: { Key: 'SelectEditor', Config: ButtonThemeConfig } },
-        { PropName: 'size', Name: '尺寸', EditorInfo: { Key: 'SelectEditor', Config: ButtonSizeConfig } },
-        { PropName: 'icon', Name: 'Icon', EditorInfo: { Key: 'TextEditor' } },
-        { PropName: 'shape', Name: '禁用', EditorInfo: { Key: 'SwitchEditor' } },
-        { PropName: 'shape', Name: '加载中', EditorInfo: { Key: 'SwitchEditor' } },
+        { PropName: 'type', Name: '类型', DefaultValue: 'default', EditorInfo: { Key: 'SelectEditor', Config: ButtonThemeConfig } },
+        { PropName: 'size', Name: '尺寸', DefaultValue: 'default', EditorInfo: { Key: 'RadioButtonGroupEditor', Config: ButtonSizeConfig } },
+        { PropName: 'icon', Name: <span style={{ paddingRight: '2px' }}>Icon</span>, EditorInfo: { Key: 'TextEditor' } },
+        { PropName: 'disabled', Name: '禁用', EditorInfo: { Key: 'SwitchEditor' } },
+        { PropName: 'loading', Name: '加 载 中 ', EditorInfo: { Key: 'SwitchEditor' } },
         { PropName: 'shape', Name: '圆形', EditorInfo: { Key: 'SwitchEditor' } },
         { PropName: 'ghost', Name: '幽灵效果', EditorInfo: { Key: 'SwitchEditor' } },
-        { PropName: 'href', Name: '链接', EditorInfo: { Key: 'SwitchEditor' } },
+        { PropName: 'href', Name: '链接', EditorInfo: { Key: 'TextEditor' } },
     ],
     DefaultProps: { text: '按钮' },
     IsLeaf: true
 };
 //ButtonGroup
-const ButtonGroup = {
+const ButtonGroupInfo = {
     Key: 'Antd.ButtonGroup',
     Introduction: {
         Name: '按钮组',
@@ -39,6 +40,8 @@ const ButtonGroup = {
     },
     Props: [{ PropName: 'size', Name: '尺寸', EditorInfo: { Key: 'SelectEditor', Config: ButtonSizeConfig } }],
 };
-const General = [Button, ButtonGroup];
-const AntdControlInfoCategory = { General };
+const General = [ButtonInfo, ButtonGroupInfo];
+const Layout = LayoutInfo;
+const DataDisplay = DataDisplayInfo;
+const AntdControlInfoCategory = { General, Layout, DataDisplay };
 export { AntdControlInfoCategory };

@@ -1,4 +1,4 @@
-const Text = "<span>{children}</span>";
+const Span = "<span>{children}</span>";
 export default {
-    Text: Text
+    Span
 };

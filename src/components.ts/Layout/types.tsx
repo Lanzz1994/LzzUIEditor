@@ -9,7 +9,10 @@ export type ElementPosition={left:number,top:number};
 export type LayoutTreeData=ControlData&{
     Size:ElementSize,
     Position:ElementPosition,
-    RootPosition:ElementPosition
+    RootPosition:ElementPosition,
+    Solts:{
+        [propName:string]:LinkedTree<LayoutTreeData>
+    }
 };
 
 export type InterfaceConfig={}&ElementSize&ElementPosition;
@@ -19,4 +22,4 @@ export type LayoutBaseProps = {
     interfaceConfig?:InterfaceConfig;
 }
 
-export type FrameworkState='normal'|'selected'|'hover'|'draging-hover';
+export type FrameworkState='normal'|'selected'|'hover'|'draging-hover'|'no-allow';

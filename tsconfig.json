@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src/components.ts/*",
+    "baseUrl": "./src/components.ts/",
     "outDir": "./src/components/",
     "strictNullChecks": true,
     "moduleResolution": "node",

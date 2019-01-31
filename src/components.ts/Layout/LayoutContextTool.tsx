@@ -7,6 +7,7 @@ import classNames from 'classnames';
 
 export interface LayoutHandleToolProps{
     interfaceConfig:InterfaceConfig,
+    hiddenToolbar:boolean,
 
     staticState:FrameworkState;
     staticLayout:InterfaceConfig;
@@ -19,8 +20,15 @@ export interface LayoutHandleToolProps{
 }
 
 export default class LayoutHandleTool extends React.PureComponent<LayoutHandleToolProps>{
+    private _toolRef:React.RefObject<HTMLDivElement>
+
+    constructor(props) {
+        super(props);
+        this._toolRef = React.createRef();
+    }
+
     render(){
-        const {staticState,staticLayout,hoverState,hoverLayout,dragState,dragLayout,interfaceConfig}=this.props;
+        const {staticState,staticLayout,hoverState,hoverLayout,dragState,dragLayout,interfaceConfig,hiddenToolbar}=this.props;
 
         const moveMenus=(
             <Menu className="lz-context-tool">
@@ -83,8 +91,8 @@ export default class LayoutHandleTool extends React.PureComponent<LayoutHandleTo
         );
 
         return (
-            <div className="lz-layout-context-tools" style={{left:interfaceConfig.left,top:interfaceConfig.top}}>
-                <div className={classNames("lz-context-tool bar hover-bar",hoverState)} style={{left:hoverLayout.left,top:hoverLayout.top}}>
+            <div className="lz-layout-context-tools" style={{left:interfaceConfig.left,top:interfaceConfig.top}} ref={this._toolRef} onMouseOver={(e)=>{e.stopPropagation();}}>
+                <div className={classNames("lz-context-tool bar hover-bar",hiddenToolbar?'normal':hoverState)} style={{left:hoverLayout.left,top:hoverLayout.top}}>
                     <Dropdown overlay={moveMenus} placement="bottomCenter">
                         <Tooltip placement="top" title="定位">
                             <IconFont type="icon-dingwei1"/>

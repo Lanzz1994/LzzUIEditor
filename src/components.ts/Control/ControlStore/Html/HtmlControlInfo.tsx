@@ -1,7 +1,7 @@
 import {ControlInfo,ControlCategoryCollection} from '../../types';
 
-const Text:ControlInfo={
-    Key:'Html.Text',
+const Span:ControlInfo={
+    Key:'Html.Span',
     Introduction:{
         Name:'文本',
         ShortName:'文本',
@@ -13,7 +13,8 @@ const Text:ControlInfo={
     ],
     DefaultProps:{
         text:'文本'
-    }
+    },
+    IsLeaf:true
 };
 const Div:ControlInfo={
     Key:'Html.Div',
@@ -32,7 +33,7 @@ const Div:ControlInfo={
     }
 };
 
-const General:ControlInfo[]=[Text];
+const General:ControlInfo[]=[Span];
 const Layout:ControlInfo[]=[Div];
 const HtmlControlInfoCategory:ControlCategoryCollection={General,Layout};
 

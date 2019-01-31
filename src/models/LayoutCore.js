@@ -1,3 +1,4 @@
+import key from 'keymaster';
 import {LinkedTree,UndoContext} from '../components/utils/index';
 
 //因为页面集合是树形的，所以这个模型只是用来解决单个页面实例的布局操作
@@ -15,7 +16,7 @@ export default {
         UndoContext:new UndoContext(),
 
         //a instance of data structure for describing component layout
-        PartTreeCore:new LinkedTree({Info:{}}),
+        PartTreeCore:new LinkedTree({Info:{},RootPosition:{left:0,top:0}}),
 
         //describes current node handler type (AddNode,RemoveNode,MoveNode,CopyNode,PasteNode)
         CurrentHandler:null,
@@ -36,12 +37,16 @@ export default {
         //DropNode:null
 
         //LayoutContextTool
+        HiddenToolbar:false,
         StaticState:'normal',
         HoverState:'normal',
         DragState:'normal',
         StaticLayout:{width:0,height:0,left:0,top:0},
         HoverLayout:{width:0,height:0,left:0,top:0},
-        DragLayout:{width:0,height:0,left:0,top:0}
+        DragLayout:{width:0,height:0,left:0,top:0},
+
+        //ControlEditor
+        ControlEditorActive:'part-tree-editor'
     },
     reducers: {
         'ResetRender'(state){
@@ -49,6 +54,10 @@ export default {
             return state;
         },
         'UpdateStates'(state,{updateStates}){
+            return {...state,...updateStates};
+        },
+        'UpdateHandler'(state,{handler}){
+            let updateStates=handler(state);
             return {...state,...updateStates};
         },
         'UndoRedo'(state,{method}){
@@ -61,5 +70,11 @@ export default {
             }
             return state;
         }
+    },
+    subscriptions:{
+        setup({ dispatch, history }){
+            key('ctrl+z',()=>{alert('undo')});
+            key('ctrl+y',()=>{alert('redo')});
+        },
     }
 };

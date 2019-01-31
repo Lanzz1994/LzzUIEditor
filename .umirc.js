@@ -1,4 +1,3 @@
-
 // ref: https://umijs.org/config/
 export default {
   plugins: [
@@ -15,9 +14,12 @@ export default {
         exclude: [],
       },
       hardSource: false,
-    }],
+    }]
   ],
   base:'./',
   publicPath:'./',
   history: 'hash',
+  chainWebpack(config){
+    config.plugin('MonacoWebpackPlugin').use(require.resolve('monaco-editor-webpack-plugin'), [{ languages: ['json'] }]);
+  }
 }

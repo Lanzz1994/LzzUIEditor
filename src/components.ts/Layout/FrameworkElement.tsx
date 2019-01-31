@@ -78,7 +78,7 @@ export default class FrameworkElement extends React.PureComponent<FrameworkEleme
         }
     }
 
-    render(){        
+    render(){
         const {id,children,size={width:0,height:0},position={left:0,top:0}} = this.props;
         const {onMouseOver,onClick,onBeginDragFramework,onDragingHoverFramework,onDropFramework,onEndDragFramework}=this;
         return (

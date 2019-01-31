@@ -5,6 +5,20 @@ import FrameworkElement from './FrameworkElement';
 export default class LayoutFramework extends React.Component {
     constructor() {
         super(...arguments);
+        this.onEnterRootFramework = (e) => {
+            const { onEnterRootFramework } = this.props;
+            if (typeof onEnterRootFramework === 'function') {
+                onEnterRootFramework();
+            }
+            e.stopPropagation();
+        };
+        this.onLeaveRootFramework = (e) => {
+            const { onLeaveRootFramework } = this.props;
+            if (typeof onLeaveRootFramework === 'function') {
+                onLeaveRootFramework();
+            }
+            e.stopPropagation();
+        };
         this.onHoverRootFramework = (e) => {
             const { onHoverExcludeFramework, layoutData } = this.props;
             if (typeof onHoverExcludeFramework === 'function') {
@@ -33,15 +47,15 @@ export default class LayoutFramework extends React.Component {
         };
     }
     render() {
-        const { layoutData, interfaceConfig, onHoverFramework, onClickFramework, onDropFramework, onDragingHoverFramework } = this.props;
-        const { onHoverRootFramework, onClickRootFramework, onDropRootFramework, onDragingHoverRootFramework } = this;
+        const { layoutData, interfaceConfig, onHoverFramework, onClickFramework, onDropFramework, onDragingHoverFramework, onBeginDragFramework, onEndDragFramework, onScroll } = this.props;
+        const { onHoverRootFramework, onClickRootFramework, onDropRootFramework, onDragingHoverRootFramework, onEnterRootFramework, onLeaveRootFramework } = this;
         const frames = layoutData.ForEachStartLeaf((current, children) => {
             const id = framework_id_prefix + current.ID;
             const data = current.Data;
             return current.HasParent ?
-                <FrameworkElement id={id} key={id} tree={current} size={data.Size} position={data.Position} onHoverFramework={onHoverFramework} onClickFramework={onClickFramework} onDropFramework={onDropFramework} onDragingHoverFramework={onDragingHoverFramework}>{children}</FrameworkElement>
+                <FrameworkElement id={id} key={id} tree={current} size={data.Size} position={data.Position} onHoverFramework={onHoverFramework} onClickFramework={onClickFramework} onBeginDragFramework={onBeginDragFramework} onDragingHoverFramework={onDragingHoverFramework} onDropFramework={onDropFramework} onEndDragFramework={onEndDragFramework}>{children}</FrameworkElement>
                 : children;
         });
-        return (<DropContainer id={framework_id_prefix + layoutData.ID} className="lz-layout-framework" style={interfaceConfig} hover={onDragingHoverRootFramework} drop={onDropRootFramework} onClick={onClickRootFramework} onMouseOver={onHoverRootFramework}>{frames}</DropContainer>);
+        return (<DropContainer id={framework_id_prefix + layoutData.ID} className="lz-layout-framework" style={interfaceConfig} hover={onDragingHoverRootFramework} drop={onDropRootFramework} onClick={onClickRootFramework} onMouseOver={onHoverRootFramework} onMouseEnter={onEnterRootFramework} onMouseLeave={onLeaveRootFramework} onScroll={onScroll}>{frames}{this.props.children}</DropContainer>);
     }
 }

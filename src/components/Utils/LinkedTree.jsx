@@ -174,7 +174,9 @@ export default class LinkedTree {
     }
     //=================== Properties =====================
     get ID() { return this._id; }
+    get Parent() { return this._parent; }
     get HasParent() { return this._parent ? true : false; }
+    get Children() { return this.Children; }
     get IsLeaf() { return this._children.length === 0; }
     get Length() { return this._children.length; }
     //=================== Add =====================
@@ -199,36 +201,39 @@ export default class LinkedTree {
     AddBefore(tree, fn) { }
     AddAfter(tree, fn) { }
     //=================== Move =====================
-    _moveToChildren(tree, fn) {
+    _moveToChildren(tree) {
         if (tree._parent) {
             remove(tree);
-            fn(tree);
         }
     }
-    _moveToSibling(tree, target, fn) {
+    _moveToSibling(tree, target) {
         if (target._parent) {
             remove(tree);
             insert(tree, target._parent);
-            fn(tree, target);
         }
     }
     /**
      *
      */
     MoveToFirst(target) {
-        this._moveToChildren(this, target.AddFirst);
+        this._moveToChildren(this);
+        target.AddFirst(this);
     }
     MoveToLast(target) {
-        this._moveToChildren(this, target.AddLast);
+        this._moveToChildren(this);
+        target.AddLast(this);
     }
     MoveToBefore(target) {
-        this._moveToSibling(this, target, setBefore);
+        this._moveToSibling(this, target);
+        setBefore(this, target);
     }
     MoveToAfter(target) {
-        this._moveToSibling(this, target, setAfter);
+        this._moveToSibling(this, target);
+        setAfter(this, target);
     }
     MoveToReplace(target) {
-        this._moveToSibling(this, target, setAfter);
+        this._moveToSibling(this, target);
+        setAfter(this, target);
         remove(target);
     }
     //=================== Copy =====================
@@ -238,7 +243,9 @@ export default class LinkedTree {
      * to append to the start of childen of the specified tree
      */
     CopyToFirst(target) {
-        target.AddFirst(copy(this));
+        let tree = copy(this);
+        target.AddFirst(tree);
+        return tree;
     }
     /**
      * Copies 'this' to the specified tree,
@@ -246,17 +253,25 @@ export default class LinkedTree {
      * to append to the end of childen of the specified tree
      */
     CopyToLast(target) {
-        target.AddLast(copy(this));
+        let tree = copy(this);
+        target.AddLast(tree);
+        return tree;
     }
     CopyToBefore(target) {
-        copy(this).MoveToBefore(target);
+        let tree = copy(this);
+        tree.MoveToBefore(target);
+        return tree;
     }
     CopyToAfter(target) {
-        copy(this).MoveToAfter(target);
+        let tree = copy(this);
+        tree.MoveToAfter(target);
+        return tree;
     }
     CopyToReplace(target) {
-        copy(this).MoveToAfter(target);
+        let tree = copy(this);
+        tree.MoveToAfter(target);
         remove(target);
+        return tree;
     }
     //=================== Remove =====================
     RemoveSelf() {
@@ -322,12 +337,26 @@ export default class LinkedTree {
     ForEachStartLeaf(fn) {
         return eachTreeChildren(this, fn);
     }
-    Find(fn) {
+    Find(fn, all) {
         let result = [];
         eachTreeParent(this, (current) => {
             if (fn(current))
                 result.push(current);
         });
-        return result;
+        if (result.length > 0)
+            return result;
+    }
+    ContainsParent(ID) {
+        let contains = false;
+        if (this._parent) {
+            BubbleHandle(this._parent, (current) => {
+                contains = current.ID === ID;
+                return !contains;
+            });
+        }
+        return contains;
+    }
+    ResetID() {
+        this._id = GenerateUUID();
     }
 }

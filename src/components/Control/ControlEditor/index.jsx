@@ -3,3 +3,4 @@ import PartTreeEditor from './PartTreeEditor';
 import PropEditor from './PropEditor/PropEditor';
 import '../../../components.ts/Control/ControlEditor/style/index';
 export { CssEditor, PartTreeEditor, PropEditor };
+export * from './PropEditor/PropEditorConfig';

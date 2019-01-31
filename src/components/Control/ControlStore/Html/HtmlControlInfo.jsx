@@ -1,5 +1,5 @@
-const Text = {
-    Key: 'Html.Text',
+const Span = {
+    Key: 'Html.Span',
     Introduction: {
         Name: '文本',
         ShortName: '文本',
@@ -11,7 +11,8 @@ const Text = {
     ],
     DefaultProps: {
         text: '文本'
-    }
+    },
+    IsLeaf: true
 };
 const Div = {
     Key: 'Html.Div',
@@ -29,7 +30,7 @@ const Div = {
         }
     }
 };
-const General = [Text];
+const General = [Span];
 const Layout = [Div];
 const HtmlControlInfoCategory = { General, Layout };
 export { HtmlControlInfoCategory };

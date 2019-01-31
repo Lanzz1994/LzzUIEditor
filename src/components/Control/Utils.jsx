@@ -12,7 +12,7 @@ export function GenerateControl(data, children) {
         if (ctrls) {
             let getCtrl = ctrls[path[1]];
             if (getCtrl)
-                result = getCtrl(PropData, children);
+                result = getCtrl(PropData, children, Object.assign({}, Info.Solts, data.Solts));
         }
     }
     return result;

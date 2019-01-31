@@ -2,12 +2,12 @@ import { HtmlControlInfoCategory, AntdControlInfoCategory } from '../ControlStor
 const General = {
     Key: 'General',
     Title: '通用',
-    Infos: AntdControlInfoCategory.General.concat(HtmlControlInfoCategory.General)
+    Infos: [...AntdControlInfoCategory.General, ...HtmlControlInfoCategory.General]
 };
 const Layout = {
     Key: 'Layout',
     Title: '布局',
-    Infos: HtmlControlInfoCategory.Layout
+    Infos: [...HtmlControlInfoCategory.Layout, ...AntdControlInfoCategory.Layout]
 };
 const Navigation = {
     Key: 'Navigation',
@@ -15,11 +15,12 @@ const Navigation = {
 };
 const DataEntry = {
     Key: 'DataEntry',
-    Title: '数据录入'
+    Title: '数据录入',
 };
 const DataDisplay = {
     Key: 'DataDisplay',
-    Title: '数据展示'
+    Title: '数据展示',
+    Infos: [...AntdControlInfoCategory.DataDisplay]
 };
 const Feedback = {
     Key: 'Feedback',

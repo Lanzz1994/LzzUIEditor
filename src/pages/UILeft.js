@@ -2,11 +2,10 @@ import React from 'react';
 import { connect } from 'dva';
 import LinkedTree from '../components/Utils/LinkedTree'
 import {ControlCollection} from '../components/Control/index';
+import {LeaveRootFramework} from './Utils';
 import './UILeft.less';
 
 class UILeft extends React.PureComponent{
-
-
 
     beginDragControl=(Info)=>{
         const {dispatch} = this.props;
@@ -17,14 +16,11 @@ class UILeft extends React.PureComponent{
     }
 
     endDragControl=(Info)=>{
-        const {dispatch} = this.props;
-        dispatch({type:'LayoutCore/UpdateStates',updateStates:{DragNode:null}});
+        LeaveRootFramework(this.props);
     }
 
     render(){
-
         const {beginDragControl,endDragControl}=this;
-        
         return(
             <ControlCollection beginDragControl={beginDragControl} endDragControl={endDragControl} />
         );

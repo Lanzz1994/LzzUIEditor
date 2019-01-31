@@ -8,15 +8,36 @@ import {LayoutBaseProps} from './types';
 interface LayoutFrameworkProps{
     onHoverFramework?:(tree:LinkedTree<LayoutTreeData>)=>void,
     onClickFramework?:(tree:LinkedTree<LayoutTreeData>)=>void,
-    onDropFramework?:(tree:LinkedTree<LayoutTreeData>)=>void,
+    onBeginDragFramework?:(tree:LinkedTree<LayoutTreeData>)=>void,
     onDragingHoverFramework?:(tree:LinkedTree<LayoutTreeData>)=>void,
+    onDropFramework?:(tree:LinkedTree<LayoutTreeData>)=>void,
+    onEndDragFramework?:(tree:LinkedTree<LayoutTreeData>)=>void,
 
     onHoverExcludeFramework?:(tree:LinkedTree<LayoutTreeData>)=>void,
     onClickExcludeFramework?:(tree:LinkedTree<LayoutTreeData>)=>void,
-    onDragingHoverExcludeFramework?:(tree:LinkedTree<LayoutTreeData>)=>void
+    onDragingHoverExcludeFramework?:(tree:LinkedTree<LayoutTreeData>)=>void,
+
+    onEnterRootFramework?:()=>void,
+    onLeaveRootFramework?:()=>void,
+    onScroll?:(e:React.UIEvent)=>void,
 }
 
 export default class LayoutFramework extends React.Component<LayoutFrameworkProps&LayoutBaseProps>{
+
+    onEnterRootFramework=(e:React.MouseEvent)=>{
+        const {onEnterRootFramework}=this.props;
+        if(typeof onEnterRootFramework==='function'){
+            onEnterRootFramework();
+        }
+        e.stopPropagation();
+    }
+    onLeaveRootFramework=(e:React.MouseEvent)=>{
+        const {onLeaveRootFramework}=this.props;
+        if(typeof onLeaveRootFramework==='function'){
+            onLeaveRootFramework();
+        }
+        e.stopPropagation();
+    }
 
     onHoverRootFramework=(e:React.MouseEvent)=>{
         const {onHoverExcludeFramework,layoutData}=this.props;
@@ -46,8 +67,8 @@ export default class LayoutFramework extends React.Component<LayoutFrameworkProp
     }
 
     render(){
-        const {layoutData,interfaceConfig,onHoverFramework,onClickFramework,onDropFramework,onDragingHoverFramework}=this.props;
-        const {onHoverRootFramework,onClickRootFramework,onDropRootFramework,onDragingHoverRootFramework}=this;
+        const {layoutData,interfaceConfig,onHoverFramework,onClickFramework,onDropFramework,onDragingHoverFramework,onBeginDragFramework,onEndDragFramework,onScroll}=this.props;
+        const {onHoverRootFramework,onClickRootFramework,onDropRootFramework,onDragingHoverRootFramework,onEnterRootFramework,onLeaveRootFramework}=this;
         const frames=layoutData.ForEachStartLeaf((current:LinkedTree<LayoutTreeData>,children:any[])=>{
             const id=framework_id_prefix+current.ID;
             const data=current.Data;
@@ -61,8 +82,10 @@ export default class LayoutFramework extends React.Component<LayoutFrameworkProp
                     position={data.Position}
                     onHoverFramework={onHoverFramework}
                     onClickFramework={onClickFramework}
-                    onDropFramework={onDropFramework}
+                    onBeginDragFramework={onBeginDragFramework}
                     onDragingHoverFramework={onDragingHoverFramework}
+                    onDropFramework={onDropFramework}
+                    onEndDragFramework={onEndDragFramework}
                 >{children}</FrameworkElement>
                 :children;
         });
@@ -72,6 +95,9 @@ export default class LayoutFramework extends React.Component<LayoutFrameworkProp
             drop={onDropRootFramework}
             onClick={onClickRootFramework}
             onMouseOver={onHoverRootFramework}
-            >{frames}</DropContainer>);
+            onMouseEnter={onEnterRootFramework}
+            onMouseLeave={onLeaveRootFramework}
+            onScroll={onScroll}
+            >{frames}{this.props.children}</DropContainer>);
     }
 }

@@ -6,6 +6,10 @@
         top:0;
         width:0;
         height:0;
+
+        &.hidden{
+            display: none;
+        }
     }
 
     .lz-context-tool{
@@ -44,6 +48,9 @@
     }
     .lz-context-tool.framework.selected{
         border:1px solid rgba(26,123,255,.8);
+    }
+    .lz-context-tool.framework.no-allow{
+        border:1px dashed #ff0000;
     }
 
     .lz-context-tool.bar{

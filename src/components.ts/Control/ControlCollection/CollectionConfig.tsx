@@ -4,12 +4,12 @@ import {HtmlControlInfoCategory,AntdControlInfoCategory} from '../ControlStore/i
 const General:ControlCategoryItem={
     Key:'General',
     Title:'通用',
-    Infos:AntdControlInfoCategory.General.concat(HtmlControlInfoCategory.General)
+    Infos:[...AntdControlInfoCategory.General,...HtmlControlInfoCategory.General]
 };
 const Layout:ControlCategoryItem={
     Key:'Layout',
     Title:'布局',
-    Infos:HtmlControlInfoCategory.Layout
+    Infos:[...HtmlControlInfoCategory.Layout,...AntdControlInfoCategory.Layout]
 };
 const Navigation:ControlCategoryItem={
     Key:'Navigation',
@@ -17,11 +17,12 @@ const Navigation:ControlCategoryItem={
 };
 const DataEntry:ControlCategoryItem={
     Key:'DataEntry',
-    Title:'数据录入'
+    Title:'数据录入',
 };
 const DataDisplay:ControlCategoryItem={
     Key:'DataDisplay',
-    Title:'数据展示'
+    Title:'数据展示',
+    Infos:[...AntdControlInfoCategory.DataDisplay]
 };
 const Feedback:ControlCategoryItem={
     Key:'Feedback',

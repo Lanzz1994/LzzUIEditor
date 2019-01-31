@@ -1,3 +1,4 @@
+import key from 'keymaster';
 
 export default {
     namespace: 'InterfaceConfig',
@@ -14,6 +15,6 @@ export default {
         //GridAixs
     },
     reducers: {
-
+        
     }
 };

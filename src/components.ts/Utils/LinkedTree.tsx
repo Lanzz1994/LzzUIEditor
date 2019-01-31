@@ -97,10 +97,10 @@ function remove(tree:LinkedTree):void{
     }
 }
 
-function copy(tree:LinkedTree):LinkedTree{
-    return tree.IsLeaf?new LinkedTree(Object.assign({},tree.Data)):
+function copy<P>(tree:LinkedTree):LinkedTree<P>{
+    return tree.IsLeaf?new LinkedTree<P>(Object.assign({},tree.Data) as P):
     eachTreeChildren(tree,(current:LinkedTree,children:LinkedTree[])=>{
-        let copyTree=new LinkedTree(Object.assign({},current.Data));
+        let copyTree:LinkedTree<P>=new LinkedTree<P>(Object.assign({},current.Data) as P);
         if(!current.IsLeaf){
             copyTree._children=children;
             copyTree._firstChild=children[0];
@@ -148,8 +148,8 @@ function RecursionHandle(tree:TreeStructure,handle:(data:any,parent?:any)=>any,p
 }
 
 //冒泡操作
-function BubbleHandle(tree,handle){
-    let current=tree,state=true;
+function BubbleHandle(tree:LinkedTree,handle){
+    let current:LinkedTree|null=tree,state=true;
     while(current!=null&&state){
         state=handle(current);
         current=current._parent;
@@ -169,7 +169,9 @@ export default class LinkedTree<P={}> {
 
     //=================== Properties =====================
     get ID(){return this._id;}
+    get Parent(){return this._parent;}
     get HasParent(){return this._parent?true:false}
+    get Children(){return this.Children;}
     get IsLeaf(){return this._children.length===0;}
     get Length(){return this._children.length;}
 
@@ -211,18 +213,16 @@ export default class LinkedTree<P={}> {
     AddAfter(tree:LinkedTree,fn):void{}
 
     //=================== Move =====================
-    private _moveToChildren(tree:LinkedTree,fn:(tree:LinkedTree)=>void){
+    private _moveToChildren(tree:LinkedTree){
         if(tree._parent){
             remove(tree);
-            fn(tree);
         }
     }
 
-    private _moveToSibling(tree:LinkedTree,target:LinkedTree,fn:(tree:LinkedTree,target:LinkedTree)=>void){
+    private _moveToSibling(tree:LinkedTree,target:LinkedTree){
         if(target._parent){
             remove(tree);
             insert(tree,target._parent);
-            fn(tree,target);
         }
     }
 
@@ -230,19 +230,24 @@ export default class LinkedTree<P={}> {
      * 
      */
     MoveToFirst(target:LinkedTree):void{
-        this._moveToChildren(this,target.AddFirst);
+        this._moveToChildren(this);
+        target.AddFirst(this);
     }
     MoveToLast(target:LinkedTree):void{
-        this._moveToChildren(this,target.AddLast);
+        this._moveToChildren(this);
+        target.AddLast(this);
     }
     MoveToBefore(target:LinkedTree):void{
-        this._moveToSibling(this,target,setBefore);
+        this._moveToSibling(this,target);
+        setBefore(this,target);
     }
     MoveToAfter(target:LinkedTree):void{
-        this._moveToSibling(this,target,setAfter);
+        this._moveToSibling(this,target);
+        setAfter(this,target);
     }
     MoveToReplace(target:LinkedTree):void{
-        this._moveToSibling(this,target,setAfter);
+        this._moveToSibling(this,target);
+        setAfter(this,target);
         remove(target);
     }
     
@@ -252,8 +257,10 @@ export default class LinkedTree<P={}> {
      * which means getted a new tree of containing 'this' structure 
      * to append to the start of childen of the specified tree
      */
-    CopyToFirst(target:LinkedTree):void{
-        target.AddFirst(copy(this));
+    CopyToFirst(target:LinkedTree):LinkedTree<P>{
+        let tree:LinkedTree<P>=copy<P>(this);
+        target.AddFirst(tree);
+        return tree;
     }
 
     /**
@@ -261,21 +268,29 @@ export default class LinkedTree<P={}> {
      * which means getted a new tree of containing 'this' structure 
      * to append to the end of childen of the specified tree
      */
-    CopyToLast(target:LinkedTree):void{
-        target.AddLast(copy(this));
+    CopyToLast(target:LinkedTree):LinkedTree<P>{
+        let tree:LinkedTree<P>=copy<P>(this);
+        target.AddLast(tree);
+        return tree;
     }
     
-    CopyToBefore(target:LinkedTree):void{
-        copy(this).MoveToBefore(target);
+    CopyToBefore(target:LinkedTree):LinkedTree<P>{
+        let tree:LinkedTree<P>=copy<P>(this);
+        tree.MoveToBefore(target);
+        return tree;
     }
 
-    CopyToAfter(target:LinkedTree):void{
-        copy(this).MoveToAfter(target);
+    CopyToAfter(target:LinkedTree):LinkedTree<P>{
+        let tree:LinkedTree<P>=copy<P>(this);
+        tree.MoveToAfter(target);
+        return tree;
     }
 
-    CopyToReplace(target:LinkedTree):void{
-        copy(this).MoveToAfter(target);
+    CopyToReplace(target:LinkedTree):LinkedTree<P>{
+        let tree:LinkedTree<P>=copy<P>(this);
+        tree.MoveToAfter(target);
         remove(target);
+        return tree;
     }
 
     //=================== Remove =====================
@@ -346,11 +361,26 @@ export default class LinkedTree<P={}> {
         return eachTreeChildren(this,fn);
     }
 
-    Find(fn:(tree:LinkedTree)=>boolean):LinkedTree[]{
+    Find(fn:(tree:LinkedTree)=>boolean,all:boolean):LinkedTree[]|undefined{
         let result:LinkedTree[]=[];
         eachTreeParent(this,(current:LinkedTree)=>{
             if(fn(current))result.push(current);
         });
-        return result;
+        if(result.length>0)return result;
+    }
+
+    ContainsParent(ID:string){
+        let contains=false;
+        if(this._parent){
+            BubbleHandle(this._parent,(current:LinkedTree)=>{
+                contains = current.ID===ID;
+                return !contains;
+            });
+        }
+        return contains;
+    }
+
+    ResetID(){
+        this._id=GenerateUUID();
     }
 }

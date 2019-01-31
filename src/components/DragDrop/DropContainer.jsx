@@ -20,11 +20,11 @@ const TargetEvents = {
 export default DropTarget(DragDropType.DragDrop, TargetEvents, (connect, monitor) => ({
     connectDropTarget: connect.dropTarget(),
     isOver: monitor.isOver(),
-    isOverCurrent: monitor.isOver({ shallow: true }),
-}))(class DropContainer extends React.PureComponent {
+    isOverCurrent: monitor.isOver({ shallow: true })
+}))(class extends React.PureComponent {
     render() {
-        const { id, className, style, connectDropTarget, children, onMouseOver, onClick } = this.props;
-        const html = (<div id={id} className={classNames("lz-drop-container", className)} style={style} onClick={onClick} onMouseOver={onMouseOver}>{children}</div>);
+        const { id, className, style, connectDropTarget, children, onMouseOver, onClick, onMouseEnter, onMouseLeave, onScroll } = this.props;
+        const html = (<div className={classNames("lz-drop-container", className)} id={id} style={style} onClick={onClick} onMouseOver={onMouseOver} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} onScroll={onScroll}>{children}</div>);
         return connectDropTarget ? connectDropTarget(html) : html;
     }
 });

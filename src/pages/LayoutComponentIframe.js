@@ -1,5 +1,7 @@
 import React from 'react';
 import {LayoutComponent} from '../components/Layout/index';
+import '../style/global.less';
+import './LayoutComponentIframe.less';
 
 export default class LayoutComponentIframe extends React.PureComponent{
     constructor(props){
@@ -10,6 +12,10 @@ export default class LayoutComponentIframe extends React.PureComponent{
 
     ResetRender=()=>{
         this.setState({ResetRenderSign:Math.random()});
+    }
+
+    SetScrollPosition=(e)=>{
+        window.scrollTo(e.target.scrolLeft,e.target.scrollTop);
     }
 
     render(){

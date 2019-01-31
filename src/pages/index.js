@@ -30,9 +30,10 @@ class LzzUIEditor extends React.PureComponent{
   updateLayout(method){
     this.props.dispatch({type:'LayoutCore/UndoRedo',method:method});
     setTimeout(()=>{
-      UpdateFrameworkLayout(this.props.LayoutCore.PartTreeCore,window.frames[0].document);
+      //window.PartTreeCore 如果在模型中更换了 PartTreeCore 的实例，这里将会失效，要注意个这个问题
       window.PartTreeCore=this.props.LayoutCore.PartTreeCore;
       window.LayoutComponentIframe.ResetRender();
+      UpdateFrameworkLayout(this.props.LayoutCore.PartTreeCore,window.frames[0].document);
     },200);
   }
 

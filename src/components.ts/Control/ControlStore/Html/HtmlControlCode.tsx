@@ -1,5 +1,5 @@
-const Text:string="<span>{children}</span>";
+const Span:string="<span>{children}</span>";
 
 export default {
-    Text:Text
+    Span
 };
