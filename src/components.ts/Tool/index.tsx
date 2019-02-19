@@ -5,5 +5,5 @@ export function TipTitle(props){
 }
 
 export const IconFont=Icon.createFromIconfontCN({
-    scriptUrl: '//at.alicdn.com/t/font_603247_f7wehwx41hw.js', // 在 iconfont.cn 上生成
+    scriptUrl: '//at.alicdn.com/t/font_603247_7ewm1pnquwk.js', // 在 iconfont.cn 上生成
 });
