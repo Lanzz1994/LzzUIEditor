@@ -427,3 +427,9 @@ let undoRedos={
         undoRedos.undos.push(temp);
         layout=temp;
         ```
+
+### 参考
+- 撤销恢复功能参考
+- https://blog.csdn.net/turbochen/article/details/8087
+- https://blog.csdn.net/zouliping123/article/details/8249196
+- https://blog.csdn.net/Mrzhang0419/article/details/52217463
