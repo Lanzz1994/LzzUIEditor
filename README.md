@@ -1,7 +1,7 @@
 ## 1. 背景
 &emsp;&emsp;目前公司的核心业务主要以做项目为主，当下前端技术发展飞速，但是公司前端技术整体主要还是以沉淀的 **Jquery** 以及相关配套技术为主。个人在做项目的过程中积极引入 **MVVM** 的相关技术，先后尝试 **Avalon、React、Vue** 等时下流行的技术框架积极尝试能快速开发的工作链路。<br/>
-&emsp;&emsp;个人是后端出身，对 .Net平台下的 winform, wpf, silverlight 有所涉及，所以想到能否有一个 GUI 的编辑器来支持整个页面的拖拽式的开发。在网上找到了很多参考案例，但是这些都是<span style="color:#009">针对特定的应用并且以模板的形式呈现</span>，而定制化的项目中粒度是以**组件**和**Html元素**，所以就就设想了这样一个页面编辑器。<br/>
-&emsp;&emsp;编辑器相对于常见的业务开发显得比较复杂，原始的代码组织方式从项目组织和开发体验上都有巨大缺憾，需要扩展新的技术寻求突破。借助 React + Typescript 能很好的将后端的开发精髓引入到前端，将复杂的功能模块化及组织，带来开发和迭代的极大便利。<br/>
+&emsp;&emsp;个人是后端出身，对 .Net平台下的 winform, wpf, silverlight 有所涉及，所以想到能否有一个 GUI 编辑器来支持整个页面的拖拽式开发。在网上找到了很多参考案例，但是这些都是<span style="color:#009">针对特定的应用并且以模板的形式呈现</span>，而定制化的项目中粒度主要以**组件**和**Html元素**为主，所以就设想了这样一个页面编辑器。<br/>
+&emsp;&emsp;编辑器相对于常见的业务开发显得比较复杂，原始的代码组织方式从项目组织和开发体验上都有巨大缺憾，需要扩展新的技术寻求突破。借助 React + Typescript 能很好地将后端开发精髓引入到前端，把复杂的功能模块化及组织，带来开发和迭代的极大便利。<br/>
 
 
 ## 2. 准备工作
@@ -11,7 +11,7 @@
 - 交互：[AntM](https://motion.ant.design/) / [React-dnd](https://github.com/react-dnd/react-dnd) / [Monaco-editor](https://microsoft.github.io/monaco-editor/)
 - 数据库：IndexDB / [Dexie](https://dexie.org/)
 
-&emsp;&emsp;选择 React + Typescript 主要是因为这套前端技术组合可以让我无缝的接入后端沉淀的面向对象编程思维（和后端的语言如 C#, Java 的特性十分贴近），其他技术已提供相应官网链接，若不了解请查看官网详细说明。
+&emsp;&emsp;Electron 是用Web技术开发本地桌面程序的利器，大名鼎鼎的 VSCode 便是基于这个平台搭建。<br/>&emsp;&emsp;选择 React + Typescript 主要是因为这套前端技术组合可以让我无缝的接入后端沉淀的面向对象编程思维（和后端的语言如 C#, Java 的特性十分贴近）。<br/>&emsp;&emsp;IndexDB 是H5新增的本地存储，避免对后端持久化的依赖增加程序复杂度。<br/>&emsp;&emsp;其他技术已提供相应官网链接，若不了解请查看官网详细说明。
 
 ### 2.2 原型设计、准备静态资源
 - 图标库 Iconfont（自己挑选符合功能点的 Icon）
@@ -146,7 +146,7 @@
     
 
 ### 3.3 实现原理
-- ### 数据结构：<a href="#">LinkedTree&lt;T&gt;</a>
+- ### 数据结构：[LinkedTree&lt;T&gt;](./src/components.ts/Utils/LinkedTree.tsx)
     
     LinkedTree 是一个嵌套链表结构，数据格式如下：<br/>
     ```javascript
@@ -433,3 +433,4 @@ let undoRedos={
 - https://blog.csdn.net/turbochen/article/details/8087
 - https://blog.csdn.net/zouliping123/article/details/8249196
 - https://blog.csdn.net/Mrzhang0419/article/details/52217463
+
